@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienes C y F | Calidad y Tradición</title>
+    <title>C y F Goods | Calidad y Tradición</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* FONDO ESTRICTO: Tu imagen de piel */
+        /* FONDO ESTRICTO: Tu imagen de piel sin cortes */
         body { 
             background-color: #1a110a;
-            /* Aquí uso el nombre exacto de tu archivo en GitHub para que no falle */
             background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('fondo-piel.png.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #f9f6f0; 
+            color: #ffffff; 
             font-family: 'Lato', sans-serif;
         }
         
@@ -24,17 +23,16 @@
         /* Tonos Dorados Cálidos */
         .text-gold { color: #d4af37; }
         .border-gold { border-color: #d4af37; }
-        .bg-gold { background-color: #d4af37; }
         
         /* Tarjetas de producto */
         .card-premium {
-            background-color: rgba(10, 10, 10, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            background-color: rgba(10, 10, 10, 0.5); /* Más transparente para que se vea la piel */
+            border: 1px solid rgba(212, 175, 55, 0.4);
             transition: all 0.3s ease;
         }
         .card-premium:hover {
-            border-color: rgba(212, 175, 55, 0.8);
-            background-color: rgba(10, 10, 10, 0.8);
+            border-color: #ffffff; /* Brilla en blanco al pasar el mouse */
+            background-color: rgba(10, 10, 10, 0.7);
         }
 
         /* Botón de WhatsApp */
@@ -57,22 +55,22 @@
 </head>
 <body class="antialiased">
 
-    <nav class="border-b border-white border-opacity-30 bg-black bg-opacity-50 py-6">
+    <nav class="border-b border-white py-6">
         <div class="max-w-7xl mx-auto px-6 text-center md:text-left flex justify-center md:justify-between items-center">
             <h1 class="text-3xl font-elegant font-bold tracking-widest text-white">
-                BIENES <span class="text-gold italic font-light">C y F</span>
+                C y F <span class="text-gold italic font-light">Goods</span>
             </h1>
         </div>
     </nav>
 
     <header class="flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
-        <span class="text-gold uppercase tracking-[0.3em] text-xs md:text-sm mb-6 block">Tradición de León, Gto.</span>
+        <span class="text-white uppercase tracking-[0.3em] text-xs md:text-sm mb-6 block">Tradición de León, Gto.</span>
         
         <h2 class="text-5xl md:text-7xl font-elegant font-bold mb-8 leading-tight text-white">
-            Tradición que <br> <span class="italic font-light">perdura.</span>
+            Tradición que <br> <span class="text-gold italic font-light">perdura.</span>
         </h2>
         
-        <p class="max-w-xl mx-auto text-gray-300 text-lg md:text-xl mb-12 font-light leading-relaxed">
+        <p class="max-w-xl mx-auto text-gray-200 text-lg md:text-xl mb-12 font-light leading-relaxed">
             Selección premium de marroquinería. Artesanía de lujo distribuida con logística directa hasta Apizaco.
         </p>
         
@@ -83,8 +81,8 @@
 
     <section class="py-16 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-16">
-            <h3 class="text-3xl font-elegant text-white mb-2">Nuestra Colección</h3>
-            <div class="w-16 h-[1px] bg-white mx-auto opacity-70"></div>
+            <h3 class="text-3xl font-elegant text-white mb-4">Nuestra Colección</h3>
+            <div class="w-24 h-[2px] bg-white mx-auto"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -94,7 +92,7 @@
                     <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=600" alt="Mochila" class="w-full h-full object-cover opacity-80">
                 </div>
                 <h4 class="text-xl font-elegant text-white mb-2">Backpack Ejecutiva</h4>
-                <p class="text-sm text-gray-400 font-light mb-4">Piel de res genuina</p>
+                <p class="text-sm text-gray-300 font-light mb-4">Piel de res genuina</p>
                 <p class="text-gold text-xl tracking-widest">$1,250 <span class="text-xs">MXN</span></p>
             </div>
 
@@ -103,7 +101,7 @@
                     <img src="https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=600" alt="Cartera" class="w-full h-full object-cover opacity-80">
                 </div>
                 <h4 class="text-xl font-elegant text-white mb-2">Cartera Triciclo</h4>
-                <p class="text-sm text-gray-400 font-light mb-4">El clásico atemporal</p>
+                <p class="text-sm text-gray-300 font-light mb-4">El clásico atemporal</p>
                 <p class="text-gold text-xl tracking-widest">$350 <span class="text-xs">MXN</span></p>
             </div>
 
@@ -112,17 +110,17 @@
                     <img src="https://images.unsplash.com/photo-1590156221122-c44367665c71?q=80&w=600" alt="Bolso" class="w-full h-full object-cover opacity-80">
                 </div>
                 <h4 class="text-xl font-elegant text-white mb-2">Bolso Tote Dama</h4>
-                <p class="text-sm text-gray-400 font-light mb-4">Elegancia y espacio</p>
+                <p class="text-sm text-gray-300 font-light mb-4">Elegancia y espacio</p>
                 <p class="text-gold text-xl tracking-widest">$980 <span class="text-xs">MXN</span></p>
             </div>
 
         </div>
     </section>
 
-    <footer class="border-t border-white border-opacity-20 mt-20 py-12 text-center bg-black bg-opacity-70">
-        <h4 class="text-2xl font-elegant text-white mb-4">BIENES <span class="text-gold italic">C y F</span></h4>
-        <p class="text-sm text-gray-400 uppercase tracking-[0.2em] mb-2">Apizaco | León</p>
-        <p class="text-xs text-gray-600 mt-8">© 2026 Bienes C y F - Calidad Premium</p>
+    <footer class="border-t border-white mt-20 py-12 text-center bg-transparent">
+        <h4 class="text-2xl font-elegant text-white mb-4">C y F <span class="text-gold italic">Goods</span></h4>
+        <p class="text-sm text-gray-300 uppercase tracking-[0.2em] mb-2">Apizaco | León</p>
+        <p class="text-xs text-gray-500 mt-8">© 2026 C y F Goods - Calidad Premium</p>
     </footer>
 
 </body>
