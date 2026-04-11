@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* FONDO ESTRICTO: Tu imagen de piel sin cortes */
+        /* FONDO ESTRICTO: Tu imagen de piel */
         body { 
             background-color: #1a110a;
             background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('fondo-piel.png.jpeg');
@@ -26,12 +26,12 @@
         
         /* Tarjetas de producto */
         .card-premium {
-            background-color: rgba(10, 10, 10, 0.5); /* Más transparente para que se vea la piel */
+            background-color: rgba(10, 10, 10, 0.5); 
             border: 1px solid rgba(212, 175, 55, 0.4);
             transition: all 0.3s ease;
         }
         .card-premium:hover {
-            border-color: #ffffff; /* Brilla en blanco al pasar el mouse */
+            border-color: #ffffff; 
             background-color: rgba(10, 10, 10, 0.7);
         }
 
@@ -55,15 +55,15 @@
 </head>
 <body class="antialiased">
 
-    <nav class="border-b border-white py-6">
+    <nav class="bg-[#fbf9f6] border-b-2 border-[#d4af37] py-5 shadow-xl">
         <div class="max-w-7xl mx-auto px-6 text-center md:text-left flex justify-center md:justify-between items-center">
-            <h1 class="text-3xl font-elegant font-bold tracking-widest text-white">
+            <h1 class="text-3xl font-elegant font-bold tracking-widest text-[#1a110a]">
                 C y F <span class="text-gold italic font-light">Goods</span>
             </h1>
         </div>
     </nav>
 
-    <header class="flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
+    <header class="flex flex-col items-center justify-center text-center px-6 py-20 md:py-28">
         <span class="text-white uppercase tracking-[0.3em] text-xs md:text-sm mb-6 block">Tradición de León, Gto.</span>
         
         <h2 class="text-5xl md:text-7xl font-elegant font-bold mb-8 leading-tight text-white">
@@ -117,7 +117,7 @@
         </div>
     </section>
 
-    <footer class="border-t border-white mt-20 py-12 text-center bg-transparent">
+    <footer class="border-t border-white mt-12 py-12 text-center bg-transparent">
         <h4 class="text-2xl font-elegant text-white mb-4">C y F <span class="text-gold italic">Goods</span></h4>
         <p class="text-sm text-gray-300 uppercase tracking-[0.2em] mb-2">Apizaco | León</p>
         <p class="text-xs text-gray-500 mt-8">© 2026 C y F Goods - Calidad Premium</p>
