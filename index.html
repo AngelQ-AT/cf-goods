@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienes CF | Premium Leather & Urban Style</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* USANDO EXACTAMENTE EL FONDO DE PIEL DE TU CAPTURA */
+        /* FONDO DE PIEL NEGRA TEXTURIZADA PARA TODA LA PÁGINA */
         body { 
             background-color: #020202; 
             background-image: url('https://images.unsplash.com/photo-1547949003-9792a18a2601?q=80&w=2070');
@@ -15,12 +15,11 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #e5e5e5; 
-            font-family: 'Inter', sans-serif;
+            font-family: 'Cinzel', serif; /* Fuente elegante y clásica */
         }
-        .font-heritage { font-family: 'Playfair Display', serif; /* Fuente elegante y clásica */ }
         
         /* RESPLANDOR DORADO CÁLIDO Y BLANCO ELEGANTE */
-        .glow-gold { text-shadow: 0 0 10px rgba(212, 175, 55, 0.6); color: #d4af37; }
+        .glow-gold { text-shadow: 0 0 10px rgba(212, 175, 55, 0.7); color: #d4af37; }
         .glow-box-warm { box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); border: 1px solid rgba(212, 175, 55, 0.5); }
         
         /* BORDES DORADOS QUE RESALTAN */
@@ -35,7 +34,7 @@
 
     <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-amber-500/20 p-4 glow-box-warm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-black tracking-tighter glow-gold italic font-heritage">
+            <h1 class="text-2xl font-black tracking-tighter glow-gold italic">
                 BIENES <span class="text-white not-italic">CF</span>
             </h1>
             <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-[0.2em]">
@@ -49,7 +48,7 @@
     <header class="relative h-[85vh] flex items-center justify-center overflow-hidden">
         <div class="relative text-center px-6 z-10">
             <span class="text-amber-500 font-bold tracking-[0.4em] uppercase text-sm mb-4 block">Tradición de León, Gto.</span>
-            <h2 class="text-6xl md:text-8xl font-black mb-6 leading-tight font-heritage text-white">Tradición que <br> <span class="glow-gold">perdura.</span></h2>
+            <h2 class="text-6xl md:text-8xl font-black mb-6 leading-tight text-white">Tradición que <br> <span class="glow-gold">perdura.</span></h2>
             
             <p class="max-w-2xl mx-auto text-stone-300 text-lg md:text-xl mb-12 font-light italic bg-black/40 p-4 rounded-xl">
                 Selección premium de marroquinería distribuida con logística directa desde el corazón de México [León] hasta Apizaco.
@@ -63,18 +62,18 @@
 
     <section id="piel" class="py-32 px-6 max-w-7xl mx-auto">
         <div class="flex items-center space-x-4 mb-20">
-            <h3 class="text-4xl font-black font-heritage">Colección <span class="text-white">PIEL</span></h3>
+            <h3 class="text-4xl font-black glow-gold">Colección <span class="text-white">PIEL</span></h3>
             <div class="h-[1px] bg-amber-500/30 flex-grow"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             
             <div class="bg-dark-card p-6 rounded-2xl border-gold transition-all group overflow-hidden">
-                <div class="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-stone-900 flex items-center justify-center border-amber-500/10">
+                <div class="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-stone-900 flex items-center justify-center border-amber-500/10 hover:border-amber-500 transition-all">
                     <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=1886" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
                 </div>
                 <h4 class="text-amber-500 font-bold tracking-widest uppercase text-sm mb-2">Resistente</h4>
-                <p class="text-2xl font-heritage mb-4 text-white">Backpack Ejecutiva</p>
+                <p class="text-2xl font- heritage mb-4 text-white">Backpack Ejecutiva</p>
                 <div class="flex justify-between items-center">
                     <span class="text-xl font-light">$1,250 <span class="text-xs">MXN</span></span>
                     <span class="text-[10px] uppercase tracking-tighter py-1 px-2 border border-stone-700 rounded text-stone-500">Piel Genuina</span>
@@ -82,7 +81,7 @@
             </div>
 
             <div class="bg-dark-card p-6 rounded-2xl border-gold transition-all group overflow-hidden">
-                <div class="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-stone-900 flex items-center justify-center border-amber-500/10">
+                <div class="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-stone-900 flex items-center justify-center border-amber-500/10 hover:border-amber-500 transition-all">
                     <img src="https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=2060" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
                 </div>
                 <h4 class="text-amber-500 font-bold tracking-widest uppercase text-sm mb-2">Clásico</h4>
@@ -94,7 +93,7 @@
             </div>
 
             <div class="bg-dark-card p-6 rounded-2xl border-gold transition-all group overflow-hidden">
-                <div class="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-stone-900 flex items-center justify-center border-amber-500/10">
+                <div class="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-stone-900 flex items-center justify-center border-amber-500/10 hover:border-amber-500 transition-all">
                     <img src="https://images.unsplash.com/photo-1590156221122-c44367665c71?q=80&w=1887" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100">
                 </div>
                 <h4 class="text-amber-500 font-bold tracking-widest uppercase text-sm mb-2">Elegante</h4>
@@ -110,7 +109,7 @@
     <section id="urbano" class="py-32 bg-black/60 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex items-center space-x-4 mb-20 flex-row-reverse">
-                <h3 class="text-4xl font-black pl-4 font-heritage text-white">Línea <span class="text-stone-500 not-italic">URBANA</span></h3>
+                <h3 class="text-4xl font-black glow-gold pl-4 font-heritage text-white">Línea <span class="text-stone-500 not-italic">URBANA</span></h3>
                 <div class="h-[1px] bg-stone-800 flex-grow"></div>
             </div>
 
@@ -151,4 +150,4 @@
     </footer>
 
 </body>
-</html>
+</html>}
