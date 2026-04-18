@@ -1,161 +1,853 @@
-undefinedhtml
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C y F Goods — Artesanía de Piel de Lujo</title>
+    <title>PELLÉ — Mochilas de Piel Artesanales</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        crema: '#f9f6f0',
-                        dorado: '#d4af37',
-                        warmwhite: '#fbf9f6',
-                    },
                     fontFamily: {
-                        playfair: ['Playfair Display', 'serif'],
-                        lato: ['Lato', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('fondo-piel.png.jpeg');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        ::selection { background: #ffedd5; color: #7c2d12; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fafaf9; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes lineGrow {
+            from { width: 0; }
+            to { width: 100%; }
         }
 
-        .hero-btn {
-            border: 1.5px solid #d4af37;
-            color: #d4af37;
-            transition: all 0.4s ease;
-        }
-        .hero-btn:hover {
-            background-color: #d4af37;
-            color: #000;
-        }
+        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; opacity: 0; }
+        .animate-slide-in { animation: slideIn 0.8s ease-out forwards; opacity: 0; }
+        .animate-scale-in { animation: scaleIn 0.7s ease-out forwards; opacity: 0; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-marquee { animation: marquee 30s linear infinite; }
 
-        .product-card {
-            background: rgba(10,10,10,0.5);
-            border: 1px solid #d4af37;
-            transition: border-color 0.4s ease, transform 0.4s ease;
-        }
-        .product-card:hover {
-            border-color: #ffffff;
-            transform: translateY(-6px);
-        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-700 { animation-delay: 0.7s; }
 
-        .separator-line {
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.9); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-scale.active { opacity: 1; transform: scale(1); }
+
+        .product-card:hover .product-img { transform: scale(1.05); }
+        .product-card:hover .product-overlay { opacity: 1; }
+        .product-card:hover .product-tag { transform: translateY(0); opacity: 1; }
+
+        .line-accent::after {
+            content: '';
+            display: block;
+            width: 0;
             height: 1px;
-            background: linear-gradient(to right, transparent, #f9f6f0, transparent);
+            background: #c2410c;
+            transition: width 0.6s ease;
+        }
+        .line-accent:hover::after { width: 100%; }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .marquee-track:hover .animate-marquee { animation-play-state: paused; }
+
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before { left: 100%; }
+
+        .glass {
+            background: rgba(250,250,249,0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .toast {
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
-<body class="font-lato text-crema min-h-screen">
+<body class="bg-stone-50 font-sans text-stone-800 antialiased overflow-x-hidden">
 
-    <!-- Navbar -->
-    <nav class="bg-warmwhite border-b border-dorado sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-baseline gap-1">
-                <span class="font-playfair text-2xl font-bold text-gray-900">C y F</span>
-                <span class="font-playfair italic text-xl text-dorado">Goods</span>
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 mix-blend-difference transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="font-display font-600 text-white text-xl tracking-tight">PELLÉ</a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#coleccion" class="nav-link relative text-white text-xs font-medium uppercase tracking-widest hover:opacity-70 transition-opacity duration-150">Colección</a>
+                <a href="#artesania" class="nav-link relative text-white text-xs font-medium uppercase tracking-widest hover:opacity-70 transition-opacity duration-150">Artesanía</a>
+                <a href="#categorias" class="nav-link relative text-white text-xs font-medium uppercase tracking-widest hover:opacity-70 transition-opacity duration-150">Categorías</a>
+                <a href="#testimonios" class="nav-link relative text-white text-xs font-medium uppercase tracking-widest hover:opacity-70 transition-opacity duration-150">Opiniones</a>
+                <a href="#contacto" class="nav-link relative text-white text-xs font-medium uppercase tracking-widest hover:opacity-70 transition-opacity duration-150">Contacto</a>
             </div>
-            <a href="https://wa.me/522411325299" target="_blank" class="text-gray-800 font-lato text-sm tracking-wide hover:text-dorado transition-colors duration-300">
-                Contacto
-            </a>
+            <div class="flex items-center gap-4">
+                <button id="cartBtn" class="relative text-white hover:opacity-70 transition-opacity duration-150">
+                    <span class="iconify" data-icon="lucide:shopping-bag" data-width="20"></span>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-orange-700 text-white text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                </button>
+                <button id="menuToggle" class="md:hidden text-white">
+                    <span class="iconify" data-icon="lucide:menu" data-width="22"></span>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="flex flex-col items-center justify-center text-center px-6 pt-32 pb-24 min-h-[80vh]">
-        <p class="font-lato text-dorado text-sm tracking-[0.3em] uppercase mb-6">Tradición de León, Gto.</p>
-        <h1 class="font-playfair text-5xl md:text-7xl font-bold leading-tight mb-8 text-crema">
-            Tradición que perdura.
-        </h1>
-        <p class="font-lato text-crema/70 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
-            Artesanía de lujo en piel, desde las manos maestras de León hasta las calles de Apizaco.
-        </p>
-        <a href="https://wa.me/522411325299" target="_blank"
-           class="hero-btn font-lato text-sm tracking-widest uppercase px-10 py-4 rounded-none">
-            Hacer Pedido Vía WhatsApp
-        </a>
-    </section>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-40 bg-stone-900/95 backdrop-blur-md flex flex-col items-center justify-center gap-8 transform translate-x-full transition-transform duration-500 ease-out">
+        <button id="menuClose" class="absolute top-5 right-6 text-white">
+            <span class="iconify" data-icon="lucide:x" data-width="24"></span>
+        </button>
+        <a href="#coleccion" class="mobile-link text-white text-2xl font-display font-light tracking-tight">Colección</a>
+        <a href="#artesania" class="mobile-link text-white text-2xl font-display font-light tracking-tight">Artesanía</a>
+        <a href="#categorias" class="mobile-link text-white text-2xl font-display font-light tracking-tight">Categorías</a>
+        <a href="#testimonios" class="mobile-link text-white text-2xl font-display font-light tracking-tight">Opiniones</a>
+        <a href="#contacto" class="mobile-link text-white text-2xl font-display font-light tracking-tight">Contacto</a>
+    </div>
 
-    <!-- Products Section -->
-    <section class="max-w-6xl mx-auto px-6 pb-28">
-        <div class="text-center mb-14">
-            <h2 class="font-playfair text-3xl md:text-4xl font-bold text-crema mb-6">Nuestra Colección</h2>
-            <div class="separator-line max-w-xs mx-auto"></div>
+    <!-- ==================== HERO ==================== -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/leather-hero-dark/1920/1080.jpg" alt="Mochila de piel" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 bg-stone-950/40"></div>
+            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(28,25,23,0.6), transparent 40%, transparent 60%, rgba(28,25,23,0.7));"></div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-            <!-- Card 1 -->
-            <div class="product-card overflow-hidden group">
-                <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=700&fit=crop"
-                         alt="Backpack Ejecutiva"
-                         class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6">
-                    <h3 class="font-playfair text-xl font-bold text-crema mb-1">Backpack Ejecutiva</h3>
-                    <p class="font-lato text-dorado text-lg font-bold mb-3">$1,250 MXN</p>
-                    <p class="font-lato text-crema/60 text-sm leading-relaxed">Piel vacuna entera, acabado matte, compartimentos internos acolchados. Hecha para durar.</p>
-                </div>
+        <div class="relative z-10 text-center px-6 max-w-4xl">
+            <p class="animate-fade-up text-orange-300/90 text-xs font-medium uppercase tracking-[0.25em] mb-6">Artesanía en piel desde 2015</p>
+            <h1 class="animate-fade-up delay-200 font-display font-light text-white text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[1.05]">
+                Elegancia que<br>se lleva a <em class="italic font-normal">cuestas</em>
+            </h1>
+            <p class="animate-fade-up delay-400 text-stone-300 text-lg md:text-xl font-light leading-relaxed mt-6 max-w-xl mx-auto">
+                Mochilas de piel hechas a mano, diseñadas para quienes valoran el detalle y la durabilidad.
+            </p>
+            <div class="animate-fade-up delay-600 flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+                <a href="#coleccion" class="btn-primary bg-white text-stone-900 px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors duration-150 shadow-lg">
+                    Ver Colección
+                </a>
+                <a href="#artesania" class="group text-white/80 px-8 py-3.5 rounded-full text-sm font-medium border border-white/20 hover:bg-white/10 transition-all duration-150 flex items-center gap-2">
+                    Nuestro Proceso
+                    <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="16"></span>
+                </a>
             </div>
-
-            <!-- Card 2 -->
-            <div class="product-card overflow-hidden group">
-                <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1624996379697-f01d168b1a52?w=600&h=700&fit=crop"
-                         alt="Cartera Triciclo"
-                         class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6">
-                    <h3 class="font-playfair text-xl font-bold text-crema mb-1">Cartera Triciclo</h3>
-                    <p class="font-lato text-dorado text-lg font-bold mb-3">$350 MXN</p>
-                    <p class="font-lato text-crema/60 text-sm leading-relaxed">Diseño compacto con triple compartimiento. Costuras reforzadas y cierre de alta resistencia.</p>
-                </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in delay-700">
+            <div class="w-5 h-8 border border-white/30 rounded-full flex justify-center pt-1.5">
+                <div class="w-0.5 h-2 bg-white/60 rounded-full animate-bounce"></div>
             </div>
-
-            <!-- Card 3 -->
-            <div class="product-card overflow-hidden group">
-                <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&h=700&fit=crop"
-                         alt="Bolso Tote Dama"
-                         class="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6">
-                    <h3 class="font-playfair text-xl font-bold text-crema mb-1">Bolso Tote Dama</h3>
-                    <p class="font-lato text-dorado text-lg font-bold mb-3">$980 MXN</p>
-                    <p class="font-lato text-crema/60 text-sm leading-relaxed">Línea sofisticada con asas de piel trenzada. Espaciosa, funcional y llena de carácter.</p>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/30" style="background: rgba(0,0,0,0.6);">
-        <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-baseline gap-1">
-                <span class="font-playfair text-lg font-bold text-crema/80">C y F</span>
-                <span class="font-playfair italic text-base text-dorado/70">Goods</span>
+    <!-- ==================== MARQUEE ==================== -->
+    <div class="bg-stone-900 py-4 overflow-hidden marquee-track">
+        <div class="flex animate-marquee whitespace-nowrap">
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Piel Italiana</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Hecho a Mano</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Edición Limitada</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Garantía de 5 Años</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Envío Gratuita</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Piel Italiana</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Hecho a Mano</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Edición Limitada</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Garantía de 5 Años</span>
+            <span class="mx-4 text-orange-700">✦</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Envío Gratuito</span>
+            <span class="mx-4 text-orange-700">✦</span>
+        </div>
+    </div>
+
+    <!-- ==================== FEATURED PRODUCTS ==================== -->
+    <section id="coleccion" class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+                <div>
+                    <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-3">Destacados</p>
+                    <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900">Nuestra Colección</h2>
+                </div>
+                <p class="text-stone-500 text-base leading-relaxed max-w-md">Cada pieza es única, elaborada con piel de primera calidad y atención al detalle que solo la artesanía permite.</p>
             </div>
-            <p class="font-lato text-crema/50 text-sm tracking-wide">Apizaco, Tlaxcala · León, Guanajuato</p>
-            <p class="font-lato text-crema/40 text-xs tracking-wider">&copy; 2025 C y F Goods. Todos los derechos reservados.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Product 1 -->
+                <div class="reveal product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
+                    <div class="relative overflow-hidden aspect-[4/5]">
+                        <img src="https://picsum.photos/seed/leather-bag-1/600/750.jpg" alt="Mochila Vénecia" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                        <div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">
+                            <button onclick="addToCart('Vénecia', 289)" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
+                                Añadir al Carrito
+                            </button>
+                        </div>
+                        <span class="absolute top-4 left-4 bg-orange-700 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">Nuevo</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-1 mb-2">
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="text-stone-400 text-xs ml-1">(48)</span>
+                        </div>
+                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Vénecia</h3>
+                        <p class="text-stone-500 text-sm mt-1">Piel de ternera curtida al vegetal</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <span class="text-stone-900 font-semibold text-lg">€289</span>
+                            <div class="flex gap-2">
+                                <span class="w-4 h-4 rounded-full bg-amber-900 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                                <span class="w-4 h-4 rounded-full bg-stone-800 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                                <span class="w-4 h-4 rounded-full bg-orange-800 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="reveal delay-100 product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
+                    <div class="relative overflow-hidden aspect-[4/5]">
+                        <img src="https://picsum.photos/seed/leather-bag-2/600/750.jpg" alt="Mochila Florencia" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                        <div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">
+                            <button onclick="addToCart('Florencia', 345)" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
+                                Añadir al Carrito
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-1 mb-2">
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-stone-300" data-icon="lucide:star" data-width="12"></span>
+                            <span class="text-stone-400 text-xs ml-1">(32)</span>
+                        </div>
+                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Florencia</h3>
+                        <p class="text-stone-500 text-sm mt-1">Piel de cabra con acabado satinado</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <span class="text-stone-900 font-semibold text-lg">€345</span>
+                            <div class="flex gap-2">
+                                <span class="w-4 h-4 rounded-full bg-amber-800 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                                <span class="w-4 h-4 rounded-full bg-stone-600 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="reveal delay-200 product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
+                    <div class="relative overflow-hidden aspect-[4/5]">
+                        <img src="https://picsum.photos/seed/leather-bag-3/600/750.jpg" alt="Mochila Milán" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                        <div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">
+                            <button onclick="addToCart('Milán', 419)" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
+                                Añadir al Carrito
+                            </button>
+                        </div>
+                        <span class="absolute top-4 left-4 bg-stone-900 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">Premium</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-1 mb-2">
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
+                            <span class="text-stone-400 text-xs ml-1">(67)</span>
+                        </div>
+                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Milán</h3>
+                        <p class="text-stone-500 text-sm mt-1">Piel de búfalo con herrajes de latón</p>
+                        <div class="flex items-center justify-between mt-4">
+                            <span class="text-stone-900 font-semibold text-lg">€419</span>
+                            <div class="flex gap-2">
+                                <span class="w-4 h-4 rounded-full bg-amber-950 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                                <span class="w-4 h-4 rounded-full bg-stone-900 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                                <span class="w-4 h-4 rounded-full bg-red-950 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal text-center mt-12">
+                <a href="#" class="group inline-flex items-center gap-2 text-stone-600 text-sm font-medium hover:text-orange-800 transition-colors duration-300">
+                    Ver Toda la Colección
+                    <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="16"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CRAFTSMANSHIP ==================== -->
+    <section id="artesania" class="py-24 md:py-32 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="reveal-left">
+                    <div class="relative">
+                        <img src="https://picsum.photos/seed/leather-craft-1/700/900.jpg" alt="Artesano trabajando piel" class="w-full rounded-2xl object-cover aspect-[3/4]">
+                        <div class="absolute -bottom-6 -right-6 bg-stone-900 text-white p-6 rounded-2xl shadow-2xl max-w-[200px] animate-float">
+                            <p class="font-display font-light text-3xl tracking-tight">9+</p>
+                            <p class="text-stone-400 text-xs uppercase tracking-wider mt-1">Años de oficio</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-right">
+                    <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-4">Nuestro Proceso</p>
+                    <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900 leading-tight">La artesanía detrás de cada puntada</h2>
+                    <p class="text-stone-500 text-lg font-light leading-relaxed mt-6">
+                        Cada mochila PELLÉ recorre un camino de más de 40 horas de trabajo manual. Desde la selección de la piel en curtidurías italianas hasta el último remate, cada paso es guiado por maestros artesanos con décadas de experiencia.
+                    </p>
+                    <div class="mt-10 space-y-6">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center">
+                                <span class="iconify text-orange-700" data-icon="lucide:search" data-width="18"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display font-medium text-stone-900">Selección de Piel</h4>
+                                <p class="text-stone-500 text-sm leading-relaxed mt-1">Elegimos solo los mejores cueros de curtidurías de Toscana, con espesor y textura perfectas.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center">
+                                <span class="iconify text-orange-700" data-icon="lucide:scissors" data-width="18"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display font-medium text-stone-900">Corte a Mano</h4>
+                                <p class="text-stone-500 text-sm leading-relaxed mt-1">Cada pieza se corta individualmente, aprovechando las cualidades naturales de cada zona del cuero.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center">
+                                <span class="iconify text-orange-700" data-icon="lucide:pen-tool" data-width="18"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-display font-medium text-stone-900">Costura Artesanal</h4>
+                                <p class="text-stone-500 text-sm leading-relaxed mt-1">Puntada a puntada, con hilo encerado de alta resistencia, garantizando durabilidad por años.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FULL WIDTH IMAGE BANNER ==================== -->
+    <section class="relative h-[60vh] md:h-[70vh] overflow-hidden">
+        <img src="https://picsum.photos/seed/leather-texture-wide/1920/800.jpg" alt="Textura de piel" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-stone-950/50"></div>
+        <div class="absolute inset-0 flex items-center justify-center text-center px-6">
+            <div class="reveal-scale">
+                <p class="text-orange-300/80 text-xs font-medium uppercase tracking-[0.25em] mb-4">Filosofía</p>
+                <h2 class="font-display font-light text-white text-3xl md:text-5xl lg:text-6xl tracking-tighter leading-tight max-w-3xl">
+                    No fabricamos mochilas.<br>Creamos <em class="italic">compañeros</em> de viaje.
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CATEGORIES ==================== -->
+    <section id="categorias" class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="reveal text-center mb-16">
+                <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-3">Explora</p>
+                <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900">Encuentra tu Estilo</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="#" class="reveal group relative overflow-hidden rounded-2xl aspect-[3/4] block">
+                    <img src="https://picsum.photos/seed/leather-cat-urban/600/800.jpg" alt="Mochilas Urbanas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">12 Productos</p>
+                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">Urbanas</h3>
+                        <div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300">
+                            <span class="text-sm font-medium">Descubrir</span>
+                            <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="reveal delay-100 group relative overflow-hidden rounded-2xl aspect-[3/4] block">
+                    <img src="https://picsum.photos/seed/leather-cat-travel/600/800.jpg" alt="Mochilas de Viaje" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">8 Productos</p>
+                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">De Viaje</h3>
+                        <div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300">
+                            <span class="text-sm font-medium">Descubrir</span>
+                            <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="reveal delay-200 group relative overflow-hidden rounded-2xl aspect-[3/4] block">
+                    <img src="https://picsum.photos/seed/leather-cat-executive/600/800.jpg" alt="Mochilas Ejecutivas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">6 Productos</p>
+                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">Ejecutivas</h3>
+                        <div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300">
+                            <span class="text-sm font-medium">Descubrir</span>
+                            <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FEATURES ==================== -->
+    <section class="py-24 md:py-32 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="reveal text-center p-6">
+                    <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
+                        <span class="iconify text-stone-700" data-icon="lucide:shield-check" data-width="24"></span>
+                    </div>
+                    <h4 class="font-display font-medium text-stone-900 mb-2">Garantía 5 Años</h4>
+                    <p class="text-stone-500 text-sm leading-relaxed">Respaldamos cada pieza con una garantía que demuestra nuestra confianza en la calidad.</p>
+                </div>
+                <div class="reveal delay-100 text-center p-6">
+                    <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
+                        <span class="iconify text-stone-700" data-icon="lucide:truck" data-width="24"></span>
+                    </div>
+                    <h4 class="font-display font-medium text-stone-900 mb-2">Envío Gratuito</h4>
+                    <p class="text-stone-500 text-sm leading-relaxed">Envío gratis a toda Europa. Empaque premium con protección especial para tu pieza.</p>
+                </div>
+                <div class="reveal delay-200 text-center p-6">
+                    <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
+                        <span class="iconify text-stone-700" data-icon="lucide:undo-2" data-width="24"></span>
+                    </div>
+                    <h4 class="font-display font-medium text-stone-900 mb-2">Devolución 30 Días</h4>
+                    <p class="text-stone-500 text-sm leading-relaxed">Si no es lo que esperabas, devuélvela sin preguntas. Queremos tu total satisfacción.</p>
+                </div>
+                <div class="reveal delay-300 text-center p-6">
+                    <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
+                        <span class="iconify text-stone-700" data-icon="lucide:leaf" data-width="24"></span>
+                    </div>
+                    <h4 class="font-display font-medium text-stone-900 mb-2">Piel Sostenible</h4>
+                    <p class="text-stone-500 text-sm leading-relaxed">Curtido vegetal sin cromo. Respetamos el medio ambiente en cada etapa del proceso.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECOND PRODUCT ROW ==================== -->
+    <section class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+                <div>
+                    <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-3">Más vendidos</p>
+                    <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900">Los Favoritos</h2>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Product 4 - Horizontal -->
+                <div class="reveal product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="relative overflow-hidden sm:w-1/2 aspect-square sm:aspect-auto">
+                            <img src="https://picsum.photos/seed/leather-bag-4/500/500.jpg" alt="Mochila Nápoles" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">-20%</span>
+                        </div>
+                        <div class="p-6 sm:w-1/2 flex flex-col justify-center">
+                            <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Nápoles</h3>
+                            <p class="text-stone-500 text-sm mt-1 leading-relaxed">Piel de cordero suave, perfecta para el día a día con compartimento acolchado para portátil 15".</p>
+                            <div class="flex items-center gap-3 mt-4">
+                                <span class="text-stone-400 line-through text-sm">€259</span>
+                                <span class="text-orange-700 font-semibold text-lg">€207</span>
+                            </div>
+                            <button onclick="addToCart('Nápoles', 207)" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">
+                                Añadir al Carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 5 - Horizontal -->
+                <div class="reveal delay-100 product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
+                    <div class="flex flex-col sm:flex-row">
+                        <div class="relative overflow-hidden sm:w-1/2 aspect-square sm:aspect-auto">
+                            <img src="https://picsum.photos/seed/leather-bag-5/500/500.jpg" alt="Mochila Verona" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                        </div>
+                        <div class="p-6 sm:w-1/2 flex flex-col justify-center">
+                            <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Verona</h3>
+                            <p class="text-stone-500 text-sm mt-1 leading-relaxed">Diseño convertible: mochila y bolso de mano. Piel grain full con cierre magnético oculto.</p>
+                            <div class="flex items-center gap-3 mt-4">
+                                <span class="text-stone-900 font-semibold text-lg">€375</span>
+                            </div>
+                            <button onclick="addToCart('Verona', 375)" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">
+                                Añadir al Carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <section id="testimonios" class="py-24 md:py-32 px-6 bg-stone-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="reveal text-center mb-16">
+                <p class="text-orange-400 text-xs font-medium uppercase tracking-[0.2em] mb-3">Testimonios</p>
+                <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-white">Lo que dicen nuestros clientes</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="reveal bg-stone-800/50 border border-stone-700/50 rounded-2xl p-8 hover:border-stone-600/50 transition-all duration-500">
+                    <div class="flex gap-1 mb-4">
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                    </div>
+                    <p class="text-stone-300 text-base leading-relaxed font-light">"La calidad es impresionante. Llevo mi mochila Vénecia todos los días desde hace dos años y parece recién comprada. La piel se ha embellecido con el uso."</p>
+                    <div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">
+                        <div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">MC</div>
+                        <div>
+                            <p class="text-white text-sm font-medium">María Castellanos</p>
+                            <p class="text-stone-500 text-xs">Directora Creativa, Madrid</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal delay-100 bg-stone-800/50 border border-stone-700/50 rounded-2xl p-8 hover:border-stone-600/50 transition-all duration-500">
+                    <div class="flex gap-1 mb-4">
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                    </div>
+                    <p class="text-stone-300 text-base leading-relaxed font-light">"Regalé la mochila Milán a mi pareja y fue un éxito total. El empaque, la presentación, todo transmite lujo sin ser ostentoso. Repetiré seguro."</p>
+                    <div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">
+                        <div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">AL</div>
+                        <div>
+                            <p class="text-white text-sm font-medium">Andrés López</p>
+                            <p class="text-stone-500 text-xs">Arquitecto, Barcelona</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal delay-200 bg-stone-800/50 border border-stone-700/50 rounded-2xl p-8 hover:border-stone-600/50 transition-all duration-500">
+                    <div class="flex gap-1 mb-4">
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify text-stone-600" data-icon="lucide:star" data-width="14"></span>
+                    </div>
+                    <p class="text-stone-300 text-base leading-relaxed font-light">"Viajé por toda Sudamérica con mi Florencia y soportó todo: lluvia, sol, viajes en bus. Se ha puesto más bonita si cabe. Productos para toda la vida."</p>
+                    <div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">
+                        <div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">LR</div>
+                        <div>
+                            <p class="text-white text-sm font-medium">Laura Ruiz</p>
+                            <p class="text-stone-500 text-xs">Fotógrafa, Valencia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== NEWSLETTER / CTA ==================== -->
+    <section id="contacto" class="py-24 md:py-32 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="reveal">
+                <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-4">Newsletter</p>
+                <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900">Sé el primero en conocer</h2>
+                <p class="text-stone-500 text-lg font-light leading-relaxed mt-4">Acceso anticipado a nuevas colecciones, descuentos exclusivos y contenido sobre el mundo de la piel artesanal.</p>
+            </div>
+            <form id="newsletterForm" class="reveal delay-200 mt-10 flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                <input type="email" id="emailInput" placeholder="Tu correo electrónico" required class="flex-1 px-5 py-3.5 rounded-full border border-stone-200 bg-white text-stone-800 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-700/20 focus:border-orange-700 transition-all duration-200">
+                <button type="submit" class="btn-primary bg-stone-900 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 whitespace-nowrap">
+                    Suscribirme
+                </button>
+            </form>
+            <p class="reveal delay-300 text-stone-400 text-xs mt-4">Sin spam. Cancela cuando quieras. Respetamos tu privacidad.</p>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-stone-900 pt-16 pb-8 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
+                <div class="md:col-span-1">
+                    <a href="#" class="font-display font-semibold text-white text-xl tracking-tight">PELLÉ</a>
+                    <p class="text-stone-500 text-sm leading-relaxed mt-4">Mochilas de piel artesanales hechas en Europa. Diseño atemporal, calidad sin compromiso.</p>
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
+                            <span class="iconify" data-icon="lucide:instagram" data-width="18"></span>
+                        </a>
+                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
+                            <span class="iconify" data-icon="lucide:facebook" data-width="18"></span>
+                        </a>
+                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
+                            <span class="iconify" data-icon="lucide:twitter" data-width="18"></span>
+                        </a>
+                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
+                            <span class="iconify" data-icon="lucide:linkedin" data-width="18"></span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-white text-xs font-medium uppercase tracking-wider mb-4">Tienda</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Mochilas Urbanas</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Mochilas de Viaje</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Mochilas Ejecutivas</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Accesorios</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Edición Limitada</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white text-xs font-medium uppercase tracking-wider mb-4">Información</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Sobre Nosotros</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Nuestro Taller</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Guía de Cuidados</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Blog</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white text-xs font-medium uppercase tracking-wider mb-4">Atención al Cliente</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Envíos y Devoluciones</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Política de Privacidad</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Términos y Condiciones</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Contacto</a></li>
+                    </ul>
+                    <div class="mt-6 flex items-center gap-3">
+                        <span class="iconify text-stone-500" data-icon="lucide:mail" data-width="14"></span>
+                        <span class="text-stone-500 text-sm">hola@pelle.es</span>
+                    </div>
+                    <div class="mt-2 flex items-center gap-3">
+                        <span class="iconify text-stone-500" data-icon="lucide:phone" data-width="14"></span>
+                        <span class="text-stone-500 text-sm">+34 912 345 678</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-stone-600 text-xs">© 2025 PELLÉ. Todos los derechos reservados.</p>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-1 text-stone-600">
+                        <span class="iconify" data-icon="lucide:credit-card" data-width="16"></span>
+                        <span class="iconify" data-icon="lucide:lock" data-width="14"></span>
+                    </div>
+                    <span class="text-stone-600 text-xs">Pagos seguros con SSL</span>
+                </div>
+            </div>
         </div>
     </footer>
 
-</body
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toast" class="toast fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
+        <span class="iconify text-orange-400 flex-shrink-0" data-icon="lucide:check-circle" data-width="20"></span>
+        <div>
+            <p id="toastTitle" class="text-sm font-medium">Añadido al carrito</p>
+            <p id="toastMsg" class="text-stone-400 text-xs mt-0.5">Mochila Vénecia — €289</p>
+        </div>
+        <button onclick="hideToast()" class="text-stone-500 hover:text-white transition-colors ml-2 flex-shrink-0">
+            <span class="iconify" data-icon="lucide:x" data-width="16"></span>
+        </button>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== MOBILE MENU =====
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+            mobileMenu.classList.add('translate-x-0');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.remove('translate-x-0');
+            mobileMenu.classList.add('translate-x-full');
+            document.body.style.overflow = '';
+        }
+
+        menuClose.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+        // ===== CART =====
+        let cartItems = 0;
+        const cartCount = document.getElementById('cartCount');
+
+        function addToCart(name, price) {
+            cartItems++;
+            cartCount.textContent = cartItems;
+            cartCount.classList.remove('hidden');
+
+            // Animate cart icon
+            const cartBtn = document.getElementById('cartBtn');
+            cartBtn.classList.add('scale-125');
+            setTimeout(() => cartBtn.classList.remove('scale-125'), 200);
+
+            // Show toast
+            document.getElementById('toastTitle').textContent = 'Añadido al carrito';
+            document.getElementById('toastMsg').textContent = `Mochila ${name} — €${price}`;
+            showToast();
+        }
+
+        // ===== TOAST =====
+        const toast = document.getElementById('toast');
+        let toastTimeout;
+
+        function showToast() {
+            clearTimeout(toastTimeout);
+            toast.classList.add('show');
+            toastTimeout = setTimeout(hideToast, 3500);
+        }
+
+        function hideToast() {
+            toast.classList.remove('show');
+        }
+
+        // ===== NEWSLETTER =====
+        const newsletterForm = document.getElementById('newsletterForm');
+        const emailInput = document.getElementById('emailInput');
+
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            if (email) {
+                document.getElementById('toastTitle').textContent = '¡Suscrito!';
+                document.getElementById('toastMsg').textContent = `${email} se ha registrado correctamente.`;
+                showToast();
+                emailInput.value = '';
+            }
+        });
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+            if (currentScroll > 100) {
+                navbar.style.mixBlendMode = 'normal';
+                navbar.style.background = 'rgba(250,250,249,0.85)';
+                navbar.style.backdropFilter = 'blur(12px)';
+                navbar.style.borderBottom = '1px solid rgba(231,229,228,0.5)';
+                navbar.querySelectorAll('a:not(.font-display)').forEach(link => {
+                    link.style.color = '#292524';
+                });
+                navbar.querySelector('.font-display').style.color = '#1c1917';
+                navbar.querySelectorAll('.iconify').forEach(icon => {
+                    icon.style.color = '#1c1917';
+                });
+                // Fix cart count
+                if (cartCount) cartCount.style.position = 'absolute';
+            } else {
+                navbar.style.mixBlendMode = 'difference';
+                navbar.style.background = 'transparent';
+                navbar.style.backdropFilter = 'none';
+                navbar.style.borderBottom = 'none';
+                navbar.querySelectorAll('a:not(.font-display)').forEach(link => {
+                    link.style.color = 'white';
+                });
+                navbar.querySelector('.font-display').style.color = 'white';
+                navbar.querySelectorAll('.iconify').forEach(icon => {
+                    icon.style.color = 'white';
+                });
+            }
+            lastScroll = currentScroll;
+        });
+
+        // ===== COLOR SWATCHES =====
+        document.querySelectorAll('.product-card .rounded-full[class*="bg-amber"], .product-card .rounded-full[class*="bg-stone-8"], .product-card .rounded-full[class*="bg-orange-8"], .product-card .rounded-full[class*="bg-red-9"]').forEach(swatch => {
+            swatch.addEventListener('click', function() {
+                const siblings = this.parentElement.querySelectorAll('span');
+                siblings.forEach(s => s.classList.remove('ring-2', 'ring-offset-2', 'ring-stone-400'));
+                this.classList.add('ring-2', 'ring-offset-2', 'ring-stone-400');
+            });
+        });
+    </script>
+</body>
+</html>
