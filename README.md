@@ -1,2 +1,2 @@
-# cf-goods
-CF Goods | Artículos de piel genuina de León, Gto. y estilo urbano. Calidad artesanal y durabilidad desde Apizaco, Tlaxcala.
+CUERO NOBLE F&C
+CUERO NOBLE F&C | Artículos de piel genuina de León, Gto. y estilo urbano. Calidad artesanal y durabilidad desde Apizaco, Tlaxcala.
