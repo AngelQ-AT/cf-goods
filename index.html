@@ -266,9 +266,11 @@
                     <label class="block text-stone-700 text-sm font-medium mb-1.5">Tu comentario</label>
                     <textarea id="tText" required rows="3" placeholder="Cuéntanos tu experiencia..." class="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-700/20 focus:border-orange-700 transition-all resize-none"></textarea>
                 </div>
-                <button type="submit" class="btn-primary w-full bg-stone-900 text-white py-3 rounded-xl text-sm font-medium hover:bg-stone-800 transition-colors duration-150">
-                    Publicar opinión
+                <button type="submit" class="btn-primary flex items-center justify-center gap-2 w-full bg-green-600 text-white py-3 rounded-xl text-sm font-medium hover:bg-green-700 transition-colors duration-150">
+                    <span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span>
+                    Enviar opinión por WhatsApp
                 </button>
+                <p class="text-stone-400 text-xs text-center">Tu opinión se envía directamente para ser aprobada y publicada.</p>
             </form>
         </div>
     </div>
@@ -276,9 +278,9 @@
     <!-- HERO -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0">
-            <img src="https://picsum.photos/seed/leather-wallet-backpack-dark/1920/1080.jpg" alt="Mochila de piel artesanal" class="w-full h-full object-cover object-center">
-            <div class="absolute inset-0 bg-stone-950/40"></div>
-            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(28,25,23,0.6), transparent 40%, transparent 60%, rgba(28,25,23,0.7));"></div>
+            <img src="https://z-cdn-media.chatglm.cn/files/092a094d-678c-4c04-94b9-5ba8501dd129.jpg?auth_key=1876545955-ac02b917854347fbb8e89e7e7ae90294-0-43e84eff95054e244d102c351cc0fe44" alt="Textura de piel artesanal" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 bg-stone-950/45"></div>
+            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(28,25,23,0.65), transparent 40%, transparent 60%, rgba(28,25,23,0.75));"></div>
         </div>
         <div class="relative z-10 text-center px-6 max-w-4xl">
             <p class="animate-fade-up text-orange-300/90 text-xs font-medium uppercase tracking-[0.25em] mb-6">Artesanía en piel</p>
@@ -589,10 +591,13 @@
 
     <!-- ==================== SCRIPTS ==================== -->
     <script>
-    // ╔══════════════════════════════════════════════════════════════════╗
-    // ║  ✏️  EDITA SOLO ESTE OBJETO — Todo el HTML se genera de aquí  ║
-    // ╚══════════════════════════════════════════════════════════════════╝
-    const SITE_DATA = {
+    // ╔═══════════════════════════════════════════════════════════════════════╗
+    // ║  ✏️  EDITA SOLO ESTE OBJETO — Todo el HTML se genera de aquí        ║
+    // ║                                                                       ║
+    // ║  Para agregar un testimonio aprobado, copia un bloque de             ║
+    // ║  "testimonios" y llena los campos. Eso es todo.                       ║
+    // ╚═══════════════════════════════════════════════════════════════════════╝
+    var SITE_DATA = {
         whatsapp: '522411325299',
 
         productosDestacados: [
@@ -648,14 +653,30 @@
             { nombre: 'Mochilas', cantidad: 12, imagen: 'leather-mochilas-urban-style' },
             { nombre: 'Carteras y Bolsos', cantidad: 15, imagen: 'leather-carteras-bolsos-collection' },
             { nombre: 'Accesorios', cantidad: 20, imagen: 'leather-accessories-belts-keyholders' }
+        ],
+
+        // ✏️ TESTIMONIOS APROBADOS — Agrega aquí los que recibas por WhatsApp
+        testimonios: [
+            // {
+            //     nombre: 'María Castellanos',
+            //     ciudad: 'CDMX',
+            //     calificacion: 5,
+            //     texto: 'La calidad es impresionante. Llevo mi mochila León todos los días y parece recién comprada.'
+            // },
+            // {
+            //     nombre: 'Andrés López',
+            //     ciudad: 'Guadalajara',
+            //     calificacion: 5,
+            //     texto: 'Regalé la mochila Monterrey a mi pareja y fue un éxito total.'
+            // }
         ]
     };
-    // ╔══════════════════════════════════════════════════════════════════╗
-    // ║  🔒 FIN DE LA ZONA DE EDICIÓN — No tocar lo de abajo          ║
-    // ╚══════════════════════════════════════════════════════════════════╝
+    // ╔═══════════════════════════════════════════════════════════════════════╗
+    // ║  🔒 FIN DE LA ZONA DE EDICIÓN — No tocar lo de abajo                ║
+    // ╚═══════════════════════════════════════════════════════════════════════╝
 
 
-    // ===== SCROLL REVEAL OBSERVER (se define ANTES de renderar) =====
+    // ===== SCROLL REVEAL =====
     var revealObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) entry.target.classList.add('active');
@@ -667,19 +688,14 @@
             revealObserver.observe(el);
         });
     }
-    // Observar los que ya existen en el HTML estático
     observeReveals();
 
 
-    // ===== LOCAL STORAGE =====
+    // ===== LOCAL STORAGE (solo para calificaciones de productos) =====
     function getRatings() {
         try { return JSON.parse(localStorage.getItem('cnfc_ratings')) || {}; } catch(e) { return {}; }
     }
     function saveRatings(r) { localStorage.setItem('cnfc_ratings', JSON.stringify(r)); }
-    function getTestimonials() {
-        try { return JSON.parse(localStorage.getItem('cnfc_testimonials')) || []; } catch(e) { return []; }
-    }
-    function saveTestimonials(t) { localStorage.setItem('cnfc_testimonials', JSON.stringify(t)); }
 
     function getProductRating(name) {
         var ratings = getRatings();
@@ -745,7 +761,7 @@
     function renderFeatured() {
         var grid = document.getElementById('featuredGrid');
         var html = '';
-        SITE_DATA.productosDestacados.forEach(function(p, i) {
+        SITE_DATA.productosDestacados.forEach(function(p) {
             var safeName = p.nombre.replace(/'/g, "\\'");
             html += '<div class="reveal product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">';
             html += '<div class="relative overflow-hidden aspect-[4/5]">';
@@ -772,7 +788,7 @@
     function renderFavorites() {
         var grid = document.getElementById('favoritesGrid');
         var html = '';
-        SITE_DATA.productosFavoritos.forEach(function(p, i) {
+        SITE_DATA.productosFavoritos.forEach(function(p) {
             var safeName = p.nombre.replace(/'/g, "\\'");
             var priceHTML = '';
             if (p.precioAnterior) {
@@ -802,7 +818,7 @@
     function renderCategories() {
         var grid = document.getElementById('categoriesGrid');
         var html = '';
-        SITE_DATA.categorias.forEach(function(c, i) {
+        SITE_DATA.categorias.forEach(function(c) {
             html += '<a href="#" class="reveal group relative overflow-hidden rounded-2xl aspect-[3/4] block">';
             html += '<img src="https://picsum.photos/seed/' + c.imagen + '/600/800.jpg" alt="' + c.nombre + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">';
             html += '<div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>';
@@ -816,10 +832,10 @@
     }
 
 
-    // ===== RENDER: TESTIMONIALS =====
+    // ===== RENDER: TESTIMONIALS (desde SITE_DATA, visibles para todos) =====
     function renderTestimonials() {
         var grid = document.getElementById('testimonialsGrid');
-        var testimonials = getTestimonials();
+        var testimonials = SITE_DATA.testimonios || [];
 
         if (testimonials.length === 0) {
             grid.innerHTML = '<div class="md:col-span-3 flex flex-col items-center justify-center py-16 text-center">' +
@@ -830,28 +846,17 @@
         }
 
         var html = '';
-        testimonials.forEach(function(t, i) {
+        testimonials.forEach(function(t) {
             var initials = t.nombre.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
-            html += '<div class="reveal bg-stone-800/50 border border-stone-700/50 rounded-2xl p-8 hover:border-stone-600/50 transition-all duration-500 relative group">';
+            html += '<div class="reveal bg-stone-800/50 border border-stone-700/50 rounded-2xl p-8 hover:border-stone-600/50 transition-all duration-500">';
             html += '<div class="flex gap-1 mb-4">' + starsStaticHTML(t.calificacion, 14) + '</div>';
             html += '<p class="text-stone-300 text-base leading-relaxed font-light">"' + t.texto + '"</p>';
             html += '<div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">';
             html += '<div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">' + initials + '</div>';
             html += '<div><p class="text-white text-sm font-medium">' + t.nombre + '</p><p class="text-stone-500 text-xs">' + t.ciudad + '</p></div>';
-            html += '</div>';
-            html += '<button onclick="deleteTestimonial(' + i + ')" class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 text-stone-600 hover:text-red-400 transition-all duration-200" title="Eliminar"><span class="iconify" data-icon="lucide:x" data-width="14"></span></button>';
-            html += '</div>';
+            html += '</div></div>';
         });
         grid.innerHTML = html;
-    }
-
-    function deleteTestimonial(index) {
-        var testimonials = getTestimonials();
-        testimonials.splice(index, 1);
-        saveTestimonials(testimonials);
-        renderTestimonials();
-        observeReveals();
-        showToast('Opinión eliminada', '', 'lucide:trash-2', 'text-stone-400');
     }
 
     function renderProducts() {
@@ -860,7 +865,7 @@
         observeReveals();
     }
 
-    // ===== INICIAL: Renderizar todo =====
+    // ===== INIT =====
     renderFeatured();
     renderFavorites();
     renderCategories();
@@ -886,7 +891,7 @@
     var cart = [];
     var cartBtn = document.getElementById('cartBtn');
     var cartDrawer = document.getElementById('cartDrawer');
-    var cartOverlay = document.getElementById('cartOverlay');
+    var cartOverlayEl = document.getElementById('cartOverlay');
     var cartCountEl = document.getElementById('cartCount');
     var cartEmptyEl = document.getElementById('cartEmpty');
     var cartListEl = document.getElementById('cartList');
@@ -896,17 +901,17 @@
 
     function openCart() {
         cartDrawer.classList.add('open');
-        cartOverlay.classList.add('open');
+        cartOverlayEl.classList.add('open');
         document.body.style.overflow = 'hidden';
     }
     function closeCart() {
         cartDrawer.classList.remove('open');
-        cartOverlay.classList.remove('open');
+        cartOverlayEl.classList.remove('open');
         document.body.style.overflow = '';
     }
     cartBtn.addEventListener('click', openCart);
     document.getElementById('cartClose').addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
+    cartOverlayEl.addEventListener('click', closeCart);
 
     function addToCart(name, price, imgSeed) {
         var idx = -1;
@@ -930,15 +935,14 @@
     }
 
     function updateCartUI() {
-        var totalItems = 0;
-        var totalPrice = 0;
+        var totalItems = 0, totalPrice = 0;
         for (var i = 0; i < cart.length; i++) {
             totalItems += cart[i].qty;
             totalPrice += cart[i].price * cart[i].qty;
         }
         cartCountEl.textContent = totalItems;
-        if (totalItems > 0) { cartCountEl.classList.remove('hidden'); }
-        else { cartCountEl.classList.add('hidden'); }
+        if (totalItems > 0) cartCountEl.classList.remove('hidden');
+        else cartCountEl.classList.add('hidden');
 
         if (cart.length === 0) {
             cartEmptyEl.classList.remove('hidden');
@@ -958,9 +962,9 @@
                 html += '<p class="text-orange-700 text-sm font-semibold mt-0.5">' + fmt(item.price) + '</p>';
                 html += '<div class="flex items-center justify-between mt-2">';
                 html += '<div class="flex items-center gap-2 bg-white border border-stone-200 rounded-full">';
-                html += '<button onclick="changeQty(' + i + ',-1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100"><span class="iconify" data-icon="lucide:minus" data-width="12"></span></button>';
+                html += '<button onclick="changeQty(' + i + ',-1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 rounded-full hover:bg-stone-100"><span class="iconify" data-icon="lucide:minus" data-width="12"></span></button>';
                 html += '<span class="text-sm font-medium text-stone-900 w-4 text-center">' + item.qty + '</span>';
-                html += '<button onclick="changeQty(' + i + ',1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100"><span class="iconify" data-icon="lucide:plus" data-width="12"></span></button>';
+                html += '<button onclick="changeQty(' + i + ',1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 rounded-full hover:bg-stone-100"><span class="iconify" data-icon="lucide:plus" data-width="12"></span></button>';
                 html += '</div>';
                 html += '<button onclick="removeFromCart(' + i + ')" class="text-stone-400 hover:text-red-500 transition-colors"><span class="iconify" data-icon="lucide:trash-2" data-width="14"></span></button>';
                 html += '</div></div></div>';
@@ -979,7 +983,7 @@
     }
 
 
-    // ===== TESTIMONIAL MODAL =====
+    // ===== TESTIMONIAL MODAL (envía por WhatsApp) =====
     var testimonialModal = document.getElementById('testimonialModal');
     var testimonialForm = document.getElementById('testimonialForm');
     var modalStarBtns = document.querySelectorAll('#modalStars .star-btn');
@@ -1028,23 +1032,27 @@
         }
         if (!name || !city || !text) return;
 
-        var testimonials = getTestimonials();
-        testimonials.unshift({
-            nombre: name,
-            ciudad: city,
-            calificacion: selectedRating,
-            texto: text,
-            fecha: new Date().toISOString()
-        });
-        saveTestimonials(testimonials);
+        // Enviar la opinión por WhatsApp para que el dueño la apruebe
+        var stars = '';
+        for (var i = 0; i < 5; i++) {
+            stars += i < selectedRating ? '⭐' : '☆';
+        }
+        var msg = '📩 *NUEVA OPINIÓN RECIBIDA*\n\n';
+        msg += '👤 *Nombre:* ' + name + '\n';
+        msg += '📍 *Ciudad:* ' + city + '\n';
+        msg += '⭐ *Calificación:* ' + stars + ' (' + selectedRating + '/5)\n\n';
+        msg += '💬 *Comentario:*\n"' + text + '"\n\n';
+        msg += '—\nPara publicar esta opinión, agrégalas manualmente en SITE_DATA.testimonios del código de la página.';
+
+        var waURL = 'https://wa.me/' + SITE_DATA.whatsapp + '?text=' + encodeURIComponent(msg);
+        window.open(waURL, '_blank');
+
         closeTestimonialModal();
-        renderTestimonials();
-        observeReveals();
-        showToast('¡Gracias por tu opinión!', 'Se ha publicado correctamente', 'lucide:heart', 'text-orange-400');
+        showToast('¡Gracias por tu opinión!', 'Se envió por WhatsApp para ser publicada', 'lucide:heart', 'text-orange-400');
     });
 
 
-    // ===== INTERACTIVE STARS ON PRODUCTS (delegated) =====
+    // ===== INTERACTIVE STARS ON PRODUCTS =====
     document.addEventListener('click', function(e) {
         var starDisplay = e.target.closest('.star-display');
         if (!starDisplay) return;
@@ -1056,9 +1064,8 @@
             if (icon === e.target || icon.contains(e.target)) clickedIndex = i;
         });
         if (clickedIndex < 0) return;
-        var rating = clickedIndex + 1;
-        rateProduct(productName, rating);
-        showToast('Calificación guardada', productName + ': ' + rating + ' estrellas', 'lucide:star', 'text-orange-400');
+        rateProduct(productName, clickedIndex + 1);
+        showToast('Calificación guardada', productName + ': ' + (clickedIndex + 1) + ' estrellas', 'lucide:star', 'text-orange-400');
     });
 
     document.addEventListener('mouseover', function(e) {
@@ -1137,7 +1144,7 @@
     });
 
 
-    // ===== SET ALL WHATSAPP LINKS =====
+    // ===== WHATSAPP LINKS =====
     var waBase = 'https://wa.me/' + SITE_DATA.whatsapp;
     document.getElementById('heroWhatsApp').href = waBase + '?text=' + encodeURIComponent('Hola, me interesa conocer más sobre sus productos de piel');
     document.getElementById('ctaWhatsApp').href = waBase + '?text=' + encodeURIComponent('Hola, quiero hacer un pedido de artículos de piel');
