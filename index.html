@@ -112,32 +112,61 @@
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .toast.show { transform: translateY(0); opacity: 1; }
 
         .cart-drawer {
             transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .cart-drawer.open {
-            transform: translateX(0);
-        }
+        .cart-drawer.open { transform: translateX(0); }
         .cart-overlay {
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
-        .cart-overlay.open {
-            opacity: 1;
-            pointer-events: auto;
+        .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal-panel {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.open .modal-panel {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .star-input .star-btn {
+            cursor: pointer;
+            transition: transform 0.15s ease, color 0.15s ease;
+        }
+        .star-input .star-btn:hover { transform: scale(1.25); }
+        .star-input .star-btn.active { color: #f97316; }
+        .star-input .star-btn.inactive { color: #d6d3d1; }
+
+        .star-display { cursor: pointer; }
+        .star-display .star-icon { transition: color 0.15s ease; }
+        .star-display .star-icon.filled { color: #f97316; }
+        .star-display .star-icon.empty { color: #d6d3d1; }
+
+        .star-tooltip {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            transform: translateY(4px);
+        }
+        .star-display:hover .star-tooltip { opacity: 1; }
     </style>
 </head>
 <body class="bg-stone-50 font-sans text-stone-800 antialiased overflow-x-hidden">
 
-    <!-- ==================== NAVIGATION ==================== -->
+    <!-- NAVIGATION -->
     <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 mix-blend-difference transition-all duration-500">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="#" class="font-display font-semibold text-white text-xl tracking-tight">CUERO NOBLE F&C</a>
@@ -204,7 +233,47 @@
         </div>
     </div>
 
-    <!-- ==================== HERO ==================== -->
+    <!-- Testimonial Modal -->
+    <div id="testimonialModal" class="modal-overlay fixed inset-0 z-50 bg-stone-950/60 backdrop-blur-sm flex items-center justify-center p-6">
+        <div class="modal-panel bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-display font-medium text-lg text-stone-900">Deja tu opinión</h3>
+                <button id="testimonialClose" class="text-stone-400 hover:text-stone-900 transition-colors">
+                    <span class="iconify" data-icon="lucide:x" data-width="20"></span>
+                </button>
+            </div>
+            <form id="testimonialForm" class="space-y-5">
+                <div>
+                    <label class="block text-stone-700 text-sm font-medium mb-1.5">Tu nombre</label>
+                    <input type="text" id="tName" required placeholder="Ej. María García" class="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-700/20 focus:border-orange-700 transition-all">
+                </div>
+                <div>
+                    <label class="block text-stone-700 text-sm font-medium mb-1.5">Ciudad</label>
+                    <input type="text" id="tCity" required placeholder="Ej. Puebla" class="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-700/20 focus:border-orange-700 transition-all">
+                </div>
+                <div>
+                    <label class="block text-stone-700 text-sm font-medium mb-2">Tu calificación</label>
+                    <div class="star-input flex gap-1" id="modalStars">
+                        <button type="button" class="star-btn inactive" data-value="1"><span class="iconify" data-icon="lucide:star" data-width="24"></span></button>
+                        <button type="button" class="star-btn inactive" data-value="2"><span class="iconify" data-icon="lucide:star" data-width="24"></span></button>
+                        <button type="button" class="star-btn inactive" data-value="3"><span class="iconify" data-icon="lucide:star" data-width="24"></span></button>
+                        <button type="button" class="star-btn inactive" data-value="4"><span class="iconify" data-icon="lucide:star" data-width="24"></span></button>
+                        <button type="button" class="star-btn inactive" data-value="5"><span class="iconify" data-icon="lucide:star" data-width="24"></span></button>
+                    </div>
+                    <input type="hidden" id="tRating" value="0">
+                </div>
+                <div>
+                    <label class="block text-stone-700 text-sm font-medium mb-1.5">Tu comentario</label>
+                    <textarea id="tText" required rows="3" placeholder="Cuéntanos tu experiencia..." class="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-700/20 focus:border-orange-700 transition-all resize-none"></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-full bg-stone-900 text-white py-3 rounded-xl text-sm font-medium hover:bg-stone-800 transition-colors duration-150">
+                    Publicar opinión
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HERO -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0">
             <img src="https://picsum.photos/seed/leather-wallet-backpack-dark/1920/1080.jpg" alt="Mochila de piel artesanal" class="w-full h-full object-cover object-center">
@@ -212,7 +281,7 @@
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(28,25,23,0.6), transparent 40%, transparent 60%, rgba(28,25,23,0.7));"></div>
         </div>
         <div class="relative z-10 text-center px-6 max-w-4xl">
-            <p class="animate-fade-up text-orange-300/90 text-xs font-medium uppercase tracking-[0.25em] mb-6">Artesanía en piel desde 2019</p>
+            <p class="animate-fade-up text-orange-300/90 text-xs font-medium uppercase tracking-[0.25em] mb-6">Artesanía en piel</p>
             <h1 class="animate-fade-up delay-200 font-display font-light text-white text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[1.05]">
                 Elegancia que<br>se lleva a <em class="italic font-normal">cuestas</em>
             </h1>
@@ -223,7 +292,7 @@
                 <a href="#coleccion" class="btn-primary bg-white text-stone-900 px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors duration-150 shadow-lg">
                     Ver Colección
                 </a>
-                <a href="https://wa.me/5215512345678?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20sus%20productos%20de%20piel" target="_blank" class="group text-white/80 px-8 py-3.5 rounded-full text-sm font-medium border border-white/20 hover:bg-white/10 transition-all duration-150 flex items-center gap-2">
+                <a id="heroWhatsApp" href="#" target="_blank" class="group text-white/80 px-8 py-3.5 rounded-full text-sm font-medium border border-white/20 hover:bg-white/10 transition-all duration-150 flex items-center gap-2">
                     <span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span>
                     Escríbenos
                 </a>
@@ -236,7 +305,7 @@
         </div>
     </section>
 
-    <!-- ==================== MARQUEE ==================== -->
+    <!-- MARQUEE -->
     <div class="bg-stone-900 py-4 overflow-hidden marquee-track">
         <div class="flex animate-marquee whitespace-nowrap">
             <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Piel de Primera</span>
@@ -262,7 +331,7 @@
         </div>
     </div>
 
-    <!-- ==================== FEATURED PRODUCTS ==================== -->
+    <!-- FEATURED PRODUCTS -->
     <section id="coleccion" class="py-24 md:py-32 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
@@ -282,7 +351,7 @@
         </div>
     </section>
 
-    <!-- ==================== CRAFTSMANSHIP ==================== -->
+    <!-- CRAFTSMANSHIP -->
     <section id="artesania" class="py-24 md:py-32 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -335,7 +404,7 @@
         </div>
     </section>
 
-    <!-- ==================== FULL WIDTH IMAGE BANNER ==================== -->
+    <!-- FILOSOFÍA -->
     <section class="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <img src="https://picsum.photos/seed/leather-texture-closeup-grain/1920/800.jpg" alt="Textura de piel" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-stone-950/50"></div>
@@ -349,7 +418,7 @@
         </div>
     </section>
 
-    <!-- ==================== CATEGORIES ==================== -->
+    <!-- CATEGORIES -->
     <section id="categorias" class="py-24 md:py-32 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="reveal text-center mb-16">
@@ -360,7 +429,7 @@
         </div>
     </section>
 
-    <!-- ==================== FEATURES ==================== -->
+    <!-- FEATURES -->
     <section class="py-24 md:py-32 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -389,7 +458,7 @@
         </div>
     </section>
 
-    <!-- ==================== SECOND PRODUCT ROW ==================== -->
+    <!-- FAVORITES -->
     <section class="py-24 md:py-32 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
@@ -402,60 +471,60 @@
         </div>
     </section>
 
-    <!-- ==================== TESTIMONIALS ==================== -->
+    <!-- TESTIMONIALS -->
     <section id="testimonios" class="py-24 md:py-32 px-6 bg-stone-900">
         <div class="max-w-7xl mx-auto">
             <div class="reveal text-center mb-16">
-                <p class="text-orange-400 text-xs font-medium uppercase tracking-[0.2em] mb-3">Testimonios</p>
+                <p class="text-orange-400 text-xs font-medium uppercase tracking-[0.2em] mb-3">Opiniones</p>
                 <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-white">Lo que dicen nuestros clientes</h2>
             </div>
             <div id="testimonialsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            <div class="reveal text-center mt-10">
+                <button id="openTestimonial" class="inline-flex items-center gap-2 border border-stone-600 text-stone-300 px-6 py-3 rounded-full text-sm font-medium hover:bg-stone-800 hover:border-stone-500 hover:text-white transition-all duration-300">
+                    <span class="iconify" data-icon="lucide:message-square-plus" data-width="16"></span>
+                    Deja tu opinión
+                </button>
+            </div>
         </div>
     </section>
 
-    <!-- ==================== CTA ==================== -->
+    <!-- CTA -->
     <section id="contacto" class="py-24 md:py-32 px-6">
         <div class="max-w-3xl mx-auto text-center">
             <div class="reveal">
                 <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-4">Contáctanos</p>
                 <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900">¿Lista para hacer tu pedido?</h2>
-                <p class="text-stone-500 text-lg font-light leading-relaxed mt-4">Agrega los productos que te gusten al carrito y envíanos tu pedido por WhatsApp. También puedes escribirnos directamente si tienes dudas.</p>
+                <p class="text-stone-500 text-lg font-light leading-relaxed mt-4">Agrega los productos que te gusten al carrito y envíanos tu pedido por WhatsApp.</p>
             </div>
             <div class="reveal delay-200 mt-10 flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-                <a href="https://wa.me/5215512345678?text=Hola,%20quiero%20hacer%20un%20pedido%20de%20artículos%20de%20piel" target="_blank" class="btn-primary flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-green-700 transition-colors duration-150 whitespace-nowrap shadow-lg">
+                <a id="ctaWhatsApp" href="#" target="_blank" class="btn-primary flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-green-700 transition-colors duration-150 whitespace-nowrap shadow-lg">
                     <span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span>
                     Pedir por WhatsApp
                 </a>
-                <a href="tel:+5215512345678" class="flex items-center justify-center gap-2 border border-stone-200 text-stone-700 px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors duration-150 whitespace-nowrap">
+                <a href="tel:+522411325299" class="flex items-center justify-center gap-2 border border-stone-200 text-stone-700 px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors duration-150 whitespace-nowrap">
                     <span class="iconify" data-icon="lucide:phone" data-width="16"></span>
                     Llamar
                 </a>
             </div>
             <div class="reveal delay-300 mt-8 p-6 bg-white rounded-2xl border border-stone-200/60 max-w-md mx-auto">
                 <p class="text-stone-600 text-sm font-medium mb-1">Número de WhatsApp</p>
-                <p class="text-stone-900 font-display font-medium text-lg">+52 55 1234 5678</p>
+                <p class="text-stone-900 font-display font-medium text-lg">+52 241 132 5299</p>
                 <p class="text-stone-400 text-xs mt-2">Lunes a sábado · 9:00 — 19:00 hrs</p>
             </div>
         </div>
     </section>
 
-    <!-- ==================== FOOTER ==================== -->
+    <!-- FOOTER -->
     <footer class="bg-stone-900 pt-16 pb-8 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
                 <div class="md:col-span-1">
                     <a href="#" class="font-display font-semibold text-white text-xl tracking-tight">CUERO NOBLE F&C</a>
-                    <p class="text-stone-500 text-sm leading-relaxed mt-4">Mochilas, carteras y accesorios de piel artesanales hechos en México. Diseño atemporal, calidad sin compromiso.</p>
+                    <p class="text-stone-500 text-sm leading-relaxed mt-4">Mochilas, carteras y accesorios de piel artesanales hechos en México.</p>
                     <div class="flex gap-4 mt-6">
-                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
-                            <span class="iconify" data-icon="lucide:instagram" data-width="18"></span>
-                        </a>
-                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
-                            <span class="iconify" data-icon="lucide:facebook" data-width="18"></span>
-                        </a>
-                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
-                            <span class="iconify" data-icon="mdi:tiktok" data-width="18"></span>
-                        </a>
+                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300"><span class="iconify" data-icon="lucide:instagram" data-width="18"></span></a>
+                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300"><span class="iconify" data-icon="lucide:facebook" data-width="18"></span></a>
+                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300"><span class="iconify" data-icon="mdi:tiktok" data-width="18"></span></a>
                     </div>
                 </div>
                 <div>
@@ -474,7 +543,6 @@
                         <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Sobre Nosotros</a></li>
                         <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Nuestro Taller</a></li>
                         <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Guía de Cuidados</a></li>
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Blog</a></li>
                         <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Preguntas Frecuentes</a></li>
                     </ul>
                 </div>
@@ -483,7 +551,7 @@
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <span class="iconify text-green-500" data-icon="mdi:whatsapp" data-width="16"></span>
-                            <a href="https://wa.me/5215512345678" target="_blank" class="text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300">+52 55 1234 5678</a>
+                            <a id="footerWhatsApp" href="#" target="_blank" class="text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300">+52 241 132 5299</a>
                         </li>
                         <li class="flex items-center gap-3">
                             <span class="iconify text-stone-500" data-icon="lucide:mail" data-width="14"></span>
@@ -502,18 +570,16 @@
             </div>
             <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
                 <p class="text-stone-600 text-xs">© 2025 Cuero Noble F&C. Todos los derechos reservados.</p>
-                <div class="flex items-center gap-4">
-                    <span class="text-stone-600 text-xs">Pagos contra entrega y transferencia</span>
-                </div>
+                <span class="text-stone-600 text-xs">Pagos contra entrega y transferencia</span>
             </div>
         </div>
     </footer>
 
-    <!-- ==================== TOAST ==================== -->
+    <!-- TOAST -->
     <div id="toast" class="toast fixed bottom-6 right-6 z-[60] bg-stone-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
-        <span class="iconify text-orange-400 flex-shrink-0" data-icon="lucide:check-circle" data-width="20"></span>
+        <span id="toastIcon" class="iconify text-orange-400 flex-shrink-0" data-icon="lucide:check-circle" data-width="20"></span>
         <div>
-            <p id="toastTitle" class="text-sm font-medium">Agregado al carrito</p>
+            <p id="toastTitle" class="text-sm font-medium"></p>
             <p id="toastMsg" class="text-stone-400 text-xs mt-0.5"></p>
         </div>
         <button onclick="hideToast()" class="text-stone-500 hover:text-white transition-colors ml-2 flex-shrink-0">
@@ -527,7 +593,7 @@
     // ║  ✏️  EDITA SOLO ESTE OBJETO — Todo el HTML se genera de aquí  ║
     // ╚══════════════════════════════════════════════════════════════════╝
     const SITE_DATA = {
-        whatsapp: '5215512345678',
+        whatsapp: '522411325299',
 
         productosDestacados: [
             {
@@ -536,8 +602,6 @@
                 precio: 6500,
                 precioAnterior: null,
                 etiqueta: { texto: 'Nuevo', color: 'bg-orange-700' },
-                calificacion: 5,
-                resenas: 48,
                 imagen: 'leather-backpack-brown',
                 colores: ['bg-amber-900', 'bg-stone-800', 'bg-orange-800']
             },
@@ -547,8 +611,6 @@
                 precio: 2800,
                 precioAnterior: null,
                 etiqueta: null,
-                calificacion: 4,
-                resenas: 32,
                 imagen: 'leather-wallet-womens',
                 colores: ['bg-amber-800', 'bg-stone-600']
             },
@@ -558,8 +620,6 @@
                 precio: 9500,
                 precioAnterior: null,
                 etiqueta: { texto: 'Premium', color: 'bg-stone-900' },
-                calificacion: 5,
-                resenas: 67,
                 imagen: 'leather-bag-premium-dark',
                 colores: ['bg-amber-950', 'bg-stone-900', 'bg-red-950']
             }
@@ -572,8 +632,7 @@
                 precio: 2800,
                 precioAnterior: 3500,
                 etiqueta: { texto: '-20%', color: 'bg-red-600' },
-                imagen: 'leather-shoulder-bag-tan',
-                colores: null
+                imagen: 'leather-shoulder-bag-tan'
             },
             {
                 nombre: 'Portafolio Querétaro',
@@ -581,8 +640,7 @@
                 precio: 8500,
                 precioAnterior: null,
                 etiqueta: null,
-                imagen: 'leather-briefcase-portfolio',
-                colores: null
+                imagen: 'leather-briefcase-portfolio'
             }
         ],
 
@@ -590,30 +648,6 @@
             { nombre: 'Mochilas', cantidad: 12, imagen: 'leather-mochilas-urban-style' },
             { nombre: 'Carteras y Bolsos', cantidad: 15, imagen: 'leather-carteras-bolsos-collection' },
             { nombre: 'Accesorios', cantidad: 20, imagen: 'leather-accessories-belts-keyholders' }
-        ],
-
-        testimonios: [
-            {
-                texto: 'La calidad es impresionante. Llevo mi mochila León todos los días desde hace dos años y parece recién comprada. La piel se ha embellecido con el uso.',
-                calificacion: 5,
-                iniciales: 'MC',
-                nombre: 'María Castellanos',
-                cargo: 'Diseñadora, CDMX'
-            },
-            {
-                texto: 'Regalé la mochila Monterrey a mi pareja y fue un éxito total. El empaque, la presentación, todo transmite lujo sin ser ostentoso. Muy buena atención por WhatsApp.',
-                calificacion: 5,
-                iniciales: 'AL',
-                nombre: 'Andrés López',
-                cargo: 'Arquitecto, Guadalajara'
-            },
-            {
-                texto: 'Viajé por todo el sur de México con mi Bolso Cruzado y soportó todo: lluvia, sol, caminos empinados. Se ha puesto más bonito con el tiempo.',
-                calificacion: 4,
-                iniciales: 'LR',
-                nombre: 'Laura Ruiz',
-                cargo: 'Fotógrafa, Oaxaca'
-            }
         ]
     };
     // ╔══════════════════════════════════════════════════════════════════╗
@@ -621,159 +655,222 @@
     // ╚══════════════════════════════════════════════════════════════════╝
 
 
-    // ===== HELPERS =====
-    function fmt(n) {
-        return '$' + n.toLocaleString('es-MX');
+    // ===== SCROLL REVEAL OBSERVER (se define ANTES de renderar) =====
+    var revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    function observeReveals() {
+        document.querySelectorAll('.reveal:not(.active), .reveal-left:not(.active), .reveal-right:not(.active), .reveal-scale:not(.active)').forEach(function(el) {
+            revealObserver.observe(el);
+        });
+    }
+    // Observar los que ya existen en el HTML estático
+    observeReveals();
+
+
+    // ===== LOCAL STORAGE =====
+    function getRatings() {
+        try { return JSON.parse(localStorage.getItem('cnfc_ratings')) || {}; } catch(e) { return {}; }
+    }
+    function saveRatings(r) { localStorage.setItem('cnfc_ratings', JSON.stringify(r)); }
+    function getTestimonials() {
+        try { return JSON.parse(localStorage.getItem('cnfc_testimonials')) || []; } catch(e) { return []; }
+    }
+    function saveTestimonials(t) { localStorage.setItem('cnfc_testimonials', JSON.stringify(t)); }
+
+    function getProductRating(name) {
+        var ratings = getRatings();
+        var list = ratings[name] || [];
+        if (list.length === 0) return { avg: 0, count: 0 };
+        var sum = list.reduce(function(a, b) { return a + b; }, 0);
+        return { avg: Math.round((sum / list.length) * 10) / 10, count: list.length };
     }
 
-    function stars(count) {
-        let html = '';
-        for (let i = 0; i < 5; i++) {
-            const color = i < count ? 'text-orange-500' : 'text-stone-300';
-            html += `<span class="iconify ${color}" data-icon="lucide:star" data-width="12"></span>`;
+    function rateProduct(name, value) {
+        var ratings = getRatings();
+        if (!ratings[name]) ratings[name] = [];
+        ratings[name].push(value);
+        saveRatings(ratings);
+        renderProducts();
+    }
+
+
+    // ===== HELPERS =====
+    function fmt(n) { return '$' + n.toLocaleString('es-MX'); }
+
+    function starsStaticHTML(count, size) {
+        size = size || 12;
+        var html = '';
+        for (var i = 0; i < 5; i++) {
+            var color = i < Math.round(count) ? 'text-orange-500' : 'text-stone-300';
+            html += '<span class="iconify ' + color + '" data-icon="lucide:star" data-width="' + size + '"></span>';
         }
         return html;
     }
 
-    function swatches(colors) {
-        if (!colors || !colors.length) return '';
-        return `<div class="flex gap-2">${colors.map(c =>
-            `<span class="w-4 h-4 rounded-full ${c} border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform color-swatch"></span>`
-        ).join('')}</div>`;
-    }
-
-    function badgeHtml(etiqueta) {
-        if (!etiqueta) return '';
-        return `<span class="absolute top-4 left-4 ${etiqueta.color} text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">${etiqueta.texto}</span>`;
-    }
-
-    function priceBlock(precio, precioAnterior) {
-        if (precioAnterior) {
-            return `<div class="flex items-center gap-3 mt-4">
-                <span class="text-stone-400 line-through text-sm">${fmt(precioAnterior)}</span>
-                <span class="text-orange-700 font-semibold text-lg">${fmt(precio)}</span>
-            </div>`;
+    function interactiveStarsHTML(productName) {
+        var rating = getProductRating(productName);
+        var html = '<div class="star-display relative flex items-center gap-0.5" data-product="' + productName.replace(/"/g, '&quot;') + '">';
+        for (var i = 1; i <= 5; i++) {
+            var cls = i <= Math.round(rating.avg) ? 'filled' : 'empty';
+            html += '<span class="star-icon ' + cls + '" data-icon="lucide:star" data-width="12"></span>';
         }
-        return `<div class="flex items-center justify-between mt-4">
-            <span class="text-stone-900 font-semibold text-lg">${fmt(precio)}</span>
-            ${swatches(null)}
-        </div>`;
+        if (rating.count > 0) {
+            html += '<span class="text-stone-400 text-xs ml-1">(' + rating.count + ')</span>';
+        }
+        html += '<span class="star-tooltip absolute -top-8 left-0 bg-stone-800 text-white text-[10px] px-2 py-1 rounded-lg whitespace-nowrap">Haz clic para calificar</span>';
+        html += '</div>';
+        return html;
+    }
+
+    function swatchesHTML(colors) {
+        if (!colors || !colors.length) return '';
+        var html = '<div class="flex gap-2">';
+        colors.forEach(function(c) {
+            html += '<span class="w-4 h-4 rounded-full ' + c + ' border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform color-swatch"></span>';
+        });
+        return html + '</div>';
+    }
+
+    function badgeHTML(etiqueta) {
+        if (!etiqueta) return '';
+        return '<span class="absolute top-4 left-4 ' + etiqueta.color + ' text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">' + etiqueta.texto + '</span>';
     }
 
 
-    // ===== RENDER: PRODUCTOS DESTACADOS (tarjetas verticales) =====
+    // ===== RENDER: FEATURED =====
     function renderFeatured() {
-        const grid = document.getElementById('featuredGrid');
-        grid.innerHTML = SITE_DATA.productosDestacados.map((p, i) => `
-            <div class="reveal ${i > 0 ? 'delay-' + i + '00' : ''} product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
-                <div class="relative overflow-hidden aspect-[4/5]">
-                    <img src="https://picsum.photos/seed/${p.imagen}/600/750.jpg" alt="${p.nombre}" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
-                    <div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">
-                        <button onclick="addToCart('${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.imagen}')" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
-                            Agregar al Carrito
-                        </button>
-                    </div>
-                    ${badgeHtml(p.etiqueta)}
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center gap-1 mb-2">
-                        ${stars(p.calificacion)}
-                        <span class="text-stone-400 text-xs ml-1">(${p.resenas})</span>
-                    </div>
-                    <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">${p.nombre}</h3>
-                    <p class="text-stone-500 text-sm mt-1">${p.descripcion}</p>
-                    <div class="flex items-center justify-between mt-4">
-                        <span class="text-stone-900 font-semibold text-lg">${fmt(p.precio)}</span>
-                        ${swatches(p.colores)}
-                    </div>
-                </div>
-            </div>
-        `).join('');
+        var grid = document.getElementById('featuredGrid');
+        var html = '';
+        SITE_DATA.productosDestacados.forEach(function(p, i) {
+            var safeName = p.nombre.replace(/'/g, "\\'");
+            html += '<div class="reveal product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">';
+            html += '<div class="relative overflow-hidden aspect-[4/5]">';
+            html += '<img src="https://picsum.photos/seed/' + p.imagen + '/600/750.jpg" alt="' + p.nombre + '" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">';
+            html += '<div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">';
+            html += '<button onclick="addToCart(\'' + safeName + '\', ' + p.precio + ', \'' + p.imagen + '\')" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">Agregar al Carrito</button>';
+            html += '</div>';
+            html += badgeHTML(p.etiqueta);
+            html += '</div>';
+            html += '<div class="p-6">';
+            html += '<div class="mb-2">' + interactiveStarsHTML(p.nombre) + '</div>';
+            html += '<h3 class="font-display font-medium text-lg tracking-tight text-stone-900">' + p.nombre + '</h3>';
+            html += '<p class="text-stone-500 text-sm mt-1">' + p.descripcion + '</p>';
+            html += '<div class="flex items-center justify-between mt-4">';
+            html += '<span class="text-stone-900 font-semibold text-lg">' + fmt(p.precio) + '</span>';
+            html += swatchesHTML(p.colores);
+            html += '</div></div></div>';
+        });
+        grid.innerHTML = html;
     }
 
 
-    // ===== RENDER: PRODUCTOS FAVORITOS (tarjetas horizontales) =====
+    // ===== RENDER: FAVORITES =====
     function renderFavorites() {
-        const grid = document.getElementById('favoritesGrid');
-        grid.innerHTML = SITE_DATA.productosFavoritos.map((p, i) => `
-            <div class="reveal ${i > 0 ? 'delay-' + i + '00' : ''} product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
-                <div class="flex flex-col sm:flex-row">
-                    <div class="relative overflow-hidden sm:w-1/2 aspect-square sm:aspect-auto">
-                        <img src="https://picsum.photos/seed/${p.imagen}/500/500.jpg" alt="${p.nombre}" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
-                        ${badgeHtml(p.etiqueta)}
-                    </div>
-                    <div class="p-6 sm:w-1/2 flex flex-col justify-center">
-                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">${p.nombre}</h3>
-                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">${p.descripcion}</p>
-                        ${priceBlock(p.precio, p.precioAnterior)}
-                        <button onclick="addToCart('${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.imagen}')" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">
-                            Agregar al Carrito
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+        var grid = document.getElementById('favoritesGrid');
+        var html = '';
+        SITE_DATA.productosFavoritos.forEach(function(p, i) {
+            var safeName = p.nombre.replace(/'/g, "\\'");
+            var priceHTML = '';
+            if (p.precioAnterior) {
+                priceHTML = '<div class="flex items-center gap-3 mt-4"><span class="text-stone-400 line-through text-sm">' + fmt(p.precioAnterior) + '</span><span class="text-orange-700 font-semibold text-lg">' + fmt(p.precio) + '</span></div>';
+            } else {
+                priceHTML = '<div class="mt-4"><span class="text-stone-900 font-semibold text-lg">' + fmt(p.precio) + '</span></div>';
+            }
+            html += '<div class="reveal product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">';
+            html += '<div class="flex flex-col sm:flex-row">';
+            html += '<div class="relative overflow-hidden sm:w-1/2 aspect-square sm:aspect-auto">';
+            html += '<img src="https://picsum.photos/seed/' + p.imagen + '/500/500.jpg" alt="' + p.nombre + '" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">';
+            html += badgeHTML(p.etiqueta);
+            html += '</div>';
+            html += '<div class="p-6 sm:w-1/2 flex flex-col justify-center">';
+            html += '<div class="mb-2">' + interactiveStarsHTML(p.nombre) + '</div>';
+            html += '<h3 class="font-display font-medium text-lg tracking-tight text-stone-900">' + p.nombre + '</h3>';
+            html += '<p class="text-stone-500 text-sm mt-1 leading-relaxed">' + p.descripcion + '</p>';
+            html += priceHTML;
+            html += '<button onclick="addToCart(\'' + safeName + '\', ' + p.precio + ', \'' + p.imagen + '\')" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">Agregar al Carrito</button>';
+            html += '</div></div></div>';
+        });
+        grid.innerHTML = html;
     }
 
 
-    // ===== RENDER: CATEGORÍAS =====
+    // ===== RENDER: CATEGORIES =====
     function renderCategories() {
-        const grid = document.getElementById('categoriesGrid');
-        grid.innerHTML = SITE_DATA.categorias.map((c, i) => `
-            <a href="#" class="reveal ${i > 0 ? 'delay-' + i + '00' : ''} group relative overflow-hidden rounded-2xl aspect-[3/4] block">
-                <img src="https://picsum.photos/seed/${c.imagen}/600/800.jpg" alt="${c.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
-                <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-8">
-                    <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">${c.cantidad} Productos</p>
-                    <h3 class="font-display font-medium text-white text-2xl tracking-tight">${c.nombre}</h3>
-                    <div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300">
-                        <span class="text-sm font-medium">Descubrir</span>
-                        <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span>
-                    </div>
-                </div>
-            </a>
-        `).join('');
+        var grid = document.getElementById('categoriesGrid');
+        var html = '';
+        SITE_DATA.categorias.forEach(function(c, i) {
+            html += '<a href="#" class="reveal group relative overflow-hidden rounded-2xl aspect-[3/4] block">';
+            html += '<img src="https://picsum.photos/seed/' + c.imagen + '/600/800.jpg" alt="' + c.nombre + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">';
+            html += '<div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>';
+            html += '<div class="absolute bottom-0 left-0 right-0 p-8">';
+            html += '<p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">' + c.cantidad + ' Productos</p>';
+            html += '<h3 class="font-display font-medium text-white text-2xl tracking-tight">' + c.nombre + '</h3>';
+            html += '<div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300"><span class="text-sm font-medium">Descubrir</span><span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span></div>';
+            html += '</div></a>';
+        });
+        grid.innerHTML = html;
     }
 
 
-    // ===== RENDER: TESTIMONIOS =====
+    // ===== RENDER: TESTIMONIALS =====
     function renderTestimonials() {
-        const grid = document.getElementById('testimonialsGrid');
-        grid.innerHTML = SITE_DATA.testimonios.map((t, i) => `
-            <div class="reveal ${i > 0 ? 'delay-' + i + '00' : ''} bg-stone-800/50 border border-stone-700/50 rounded-2xl p-8 hover:border-stone-600/50 transition-all duration-500">
-                <div class="flex gap-1 mb-4">${stars(t.calificacion)}</div>
-                <p class="text-stone-300 text-base leading-relaxed font-light">"${t.texto}"</p>
-                <div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">
-                    <div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">${t.iniciales}</div>
-                    <div>
-                        <p class="text-white text-sm font-medium">${t.nombre}</p>
-                        <p class="text-stone-500 text-xs">${t.cargo}</p>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+        var grid = document.getElementById('testimonialsGrid');
+        var testimonials = getTestimonials();
+
+        if (testimonials.length === 0) {
+            grid.innerHTML = '<div class="md:col-span-3 flex flex-col items-center justify-center py-16 text-center">' +
+                '<span class="iconify text-stone-600 mb-4" data-icon="lucide:message-square" data-width="48"></span>' +
+                '<p class="text-stone-400 text-lg font-display font-light">Aún no hay opiniones</p>' +
+                '<p class="text-stone-500 text-sm mt-2 max-w-md">Sé el primero en compartir tu experiencia con nuestros productos de piel artesanal.</p></div>';
+            return;
+        }
+
+        var html = '';
+        testimonials.forEach(function(t, i) {
+            var initials = t.nombre.split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+            html += '<div class="reveal bg-stone-800/50 border border-stone-700/50 rounded-2xl p-8 hover:border-stone-600/50 transition-all duration-500 relative group">';
+            html += '<div class="flex gap-1 mb-4">' + starsStaticHTML(t.calificacion, 14) + '</div>';
+            html += '<p class="text-stone-300 text-base leading-relaxed font-light">"' + t.texto + '"</p>';
+            html += '<div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">';
+            html += '<div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">' + initials + '</div>';
+            html += '<div><p class="text-white text-sm font-medium">' + t.nombre + '</p><p class="text-stone-500 text-xs">' + t.ciudad + '</p></div>';
+            html += '</div>';
+            html += '<button onclick="deleteTestimonial(' + i + ')" class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 text-stone-600 hover:text-red-400 transition-all duration-200" title="Eliminar"><span class="iconify" data-icon="lucide:x" data-width="14"></span></button>';
+            html += '</div>';
+        });
+        grid.innerHTML = html;
     }
 
+    function deleteTestimonial(index) {
+        var testimonials = getTestimonials();
+        testimonials.splice(index, 1);
+        saveTestimonials(testimonials);
+        renderTestimonials();
+        observeReveals();
+        showToast('Opinión eliminada', '', 'lucide:trash-2', 'text-stone-400');
+    }
 
-    // ===== INIT RENDER =====
+    function renderProducts() {
+        renderFeatured();
+        renderFavorites();
+        observeReveals();
+    }
+
+    // ===== INICIAL: Renderizar todo =====
     renderFeatured();
     renderFavorites();
     renderCategories();
     renderTestimonials();
-
-
-    // ===== SCROLL REVEAL =====
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('active');
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+    observeReveals();
 
 
     // ===== MOBILE MENU =====
-    const mobileMenu = document.getElementById('mobileMenu');
-    document.getElementById('menuToggle').addEventListener('click', () => {
+    var mobileMenu = document.getElementById('mobileMenu');
+    document.getElementById('menuToggle').addEventListener('click', function() {
         mobileMenu.classList.replace('translate-x-full', 'translate-x-0');
         document.body.style.overflow = 'hidden';
     });
@@ -782,20 +879,20 @@
         document.body.style.overflow = '';
     }
     document.getElementById('menuClose').addEventListener('click', closeMenu);
-    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
+    document.querySelectorAll('.mobile-link').forEach(function(l) { l.addEventListener('click', closeMenu); });
 
 
     // ===== CART =====
-    let cart = [];
-    const cartBtn = document.getElementById('cartBtn');
-    const cartDrawer = document.getElementById('cartDrawer');
-    const cartOverlay = document.getElementById('cartOverlay');
-    const cartCountEl = document.getElementById('cartCount');
-    const cartEmptyEl = document.getElementById('cartEmpty');
-    const cartListEl = document.getElementById('cartList');
-    const cartFooterEl = document.getElementById('cartFooter');
-    const cartTotalEl = document.getElementById('cartTotal');
-    const whatsappOrderBtn = document.getElementById('whatsappOrder');
+    var cart = [];
+    var cartBtn = document.getElementById('cartBtn');
+    var cartDrawer = document.getElementById('cartDrawer');
+    var cartOverlay = document.getElementById('cartOverlay');
+    var cartCountEl = document.getElementById('cartCount');
+    var cartEmptyEl = document.getElementById('cartEmpty');
+    var cartListEl = document.getElementById('cartList');
+    var cartFooterEl = document.getElementById('cartFooter');
+    var cartTotalEl = document.getElementById('cartTotal');
+    var whatsappOrderBtn = document.getElementById('whatsappOrder');
 
     function openCart() {
         cartDrawer.classList.add('open');
@@ -812,15 +909,16 @@
     cartOverlay.addEventListener('click', closeCart);
 
     function addToCart(name, price, imgSeed) {
-        const idx = cart.findIndex(item => item.name === name);
+        var idx = -1;
+        for (var i = 0; i < cart.length; i++) {
+            if (cart[i].name === name) { idx = i; break; }
+        }
         if (idx >= 0) { cart[idx].qty++; }
-        else { cart.push({ name, price, imgSeed, qty: 1 }); }
+        else { cart.push({ name: name, price: price, imgSeed: imgSeed, qty: 1 }); }
         updateCartUI();
         cartBtn.style.transform = 'scale(1.3)';
-        setTimeout(() => cartBtn.style.transform = '', 200);
-        document.getElementById('toastTitle').textContent = 'Agregado al carrito';
-        document.getElementById('toastMsg').textContent = `${name} — ${fmt(price)}`;
-        showToast();
+        setTimeout(function() { cartBtn.style.transform = ''; }, 200);
+        showToast('Agregado al carrito', name + ' — ' + fmt(price), 'lucide:check-circle', 'text-orange-400');
     }
 
     function removeFromCart(i) { cart.splice(i, 1); updateCartUI(); }
@@ -832,10 +930,15 @@
     }
 
     function updateCartUI() {
-        const totalItems = cart.reduce((s, x) => s + x.qty, 0);
-        const totalPrice = cart.reduce((s, x) => s + x.price * x.qty, 0);
+        var totalItems = 0;
+        var totalPrice = 0;
+        for (var i = 0; i < cart.length; i++) {
+            totalItems += cart[i].qty;
+            totalPrice += cart[i].price * cart[i].qty;
+        }
         cartCountEl.textContent = totalItems;
-        cartCountEl.classList.toggle('hidden', totalItems === 0);
+        if (totalItems > 0) { cartCountEl.classList.remove('hidden'); }
+        else { cartCountEl.classList.add('hidden'); }
 
         if (cart.length === 0) {
             cartEmptyEl.classList.remove('hidden');
@@ -845,47 +948,158 @@
             cartEmptyEl.classList.add('hidden');
             cartListEl.classList.remove('hidden');
             cartFooterEl.classList.remove('hidden');
-            cartListEl.innerHTML = cart.map((item, i) => `
-                <div class="flex gap-4 p-3 bg-stone-50 rounded-xl">
-                    <img src="https://picsum.photos/seed/${item.imgSeed}/120/120.jpg" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
-                    <div class="flex-1 min-w-0">
-                        <h4 class="font-display font-medium text-sm text-stone-900 truncate">${item.name}</h4>
-                        <p class="text-orange-700 text-sm font-semibold mt-0.5">${fmt(item.price)}</p>
-                        <div class="flex items-center justify-between mt-2">
-                            <div class="flex items-center gap-2 bg-white border border-stone-200 rounded-full">
-                                <button onclick="changeQty(${i},-1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100">
-                                    <span class="iconify" data-icon="lucide:minus" data-width="12"></span>
-                                </button>
-                                <span class="text-sm font-medium text-stone-900 w-4 text-center">${item.qty}</span>
-                                <button onclick="changeQty(${i},1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100">
-                                    <span class="iconify" data-icon="lucide:plus" data-width="12"></span>
-                                </button>
-                            </div>
-                            <button onclick="removeFromCart(${i})" class="text-stone-400 hover:text-red-500 transition-colors">
-                                <span class="iconify" data-icon="lucide:trash-2" data-width="14"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+
+            var html = '';
+            cart.forEach(function(item, i) {
+                html += '<div class="flex gap-4 p-3 bg-stone-50 rounded-xl">';
+                html += '<img src="https://picsum.photos/seed/' + item.imgSeed + '/120/120.jpg" alt="' + item.name + '" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">';
+                html += '<div class="flex-1 min-w-0">';
+                html += '<h4 class="font-display font-medium text-sm text-stone-900 truncate">' + item.name + '</h4>';
+                html += '<p class="text-orange-700 text-sm font-semibold mt-0.5">' + fmt(item.price) + '</p>';
+                html += '<div class="flex items-center justify-between mt-2">';
+                html += '<div class="flex items-center gap-2 bg-white border border-stone-200 rounded-full">';
+                html += '<button onclick="changeQty(' + i + ',-1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100"><span class="iconify" data-icon="lucide:minus" data-width="12"></span></button>';
+                html += '<span class="text-sm font-medium text-stone-900 w-4 text-center">' + item.qty + '</span>';
+                html += '<button onclick="changeQty(' + i + ',1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100"><span class="iconify" data-icon="lucide:plus" data-width="12"></span></button>';
+                html += '</div>';
+                html += '<button onclick="removeFromCart(' + i + ')" class="text-stone-400 hover:text-red-500 transition-colors"><span class="iconify" data-icon="lucide:trash-2" data-width="14"></span></button>';
+                html += '</div></div></div>';
+            });
+            cartListEl.innerHTML = html;
             cartTotalEl.textContent = fmt(totalPrice);
 
-            let msg = '¡Hola! Me gustaría hacer el siguiente pedido:\n\n';
-            cart.forEach(item => {
-                msg += `• ${item.name} x${item.qty} — ${fmt(item.price * item.qty)}\n`;
+            var msg = '¡Hola! Me gustaría hacer el siguiente pedido:\n\n';
+            cart.forEach(function(item) {
+                msg += '• ' + item.name + ' x' + item.qty + ' — ' + fmt(item.price * item.qty) + '\n';
             });
-            msg += `\nTotal: ${fmt(totalPrice)}`;
+            msg += '\nTotal: ' + fmt(totalPrice);
             msg += '\n\n¿Podrían confirmarme disponibilidad y detalles de envío?';
-            whatsappOrderBtn.href = `https://wa.me/${SITE_DATA.whatsapp}?text=${encodeURIComponent(msg)}`;
+            whatsappOrderBtn.href = 'https://wa.me/' + SITE_DATA.whatsapp + '?text=' + encodeURIComponent(msg);
         }
     }
 
 
+    // ===== TESTIMONIAL MODAL =====
+    var testimonialModal = document.getElementById('testimonialModal');
+    var testimonialForm = document.getElementById('testimonialForm');
+    var modalStarBtns = document.querySelectorAll('#modalStars .star-btn');
+    var selectedRating = 0;
+
+    document.getElementById('openTestimonial').addEventListener('click', function() {
+        testimonialModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    });
+
+    document.getElementById('testimonialClose').addEventListener('click', closeTestimonialModal);
+    testimonialModal.addEventListener('click', function(e) {
+        if (e.target === testimonialModal) closeTestimonialModal();
+    });
+
+    function closeTestimonialModal() {
+        testimonialModal.classList.remove('open');
+        document.body.style.overflow = '';
+        testimonialForm.reset();
+        selectedRating = 0;
+        document.getElementById('tRating').value = 0;
+        modalStarBtns.forEach(function(b) { b.classList.remove('active'); b.classList.add('inactive'); });
+    }
+
+    modalStarBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            selectedRating = parseInt(btn.dataset.value);
+            document.getElementById('tRating').value = selectedRating;
+            modalStarBtns.forEach(function(b) {
+                var v = parseInt(b.dataset.value);
+                if (v <= selectedRating) { b.classList.add('active'); b.classList.remove('inactive'); }
+                else { b.classList.remove('active'); b.classList.add('inactive'); }
+            });
+        });
+    });
+
+    testimonialForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = document.getElementById('tName').value.trim();
+        var city = document.getElementById('tCity').value.trim();
+        var text = document.getElementById('tText').value.trim();
+
+        if (selectedRating === 0) {
+            showToast('Selecciona una calificación', 'Haz clic en las estrellas', 'lucide:alert-circle', 'text-orange-400');
+            return;
+        }
+        if (!name || !city || !text) return;
+
+        var testimonials = getTestimonials();
+        testimonials.unshift({
+            nombre: name,
+            ciudad: city,
+            calificacion: selectedRating,
+            texto: text,
+            fecha: new Date().toISOString()
+        });
+        saveTestimonials(testimonials);
+        closeTestimonialModal();
+        renderTestimonials();
+        observeReveals();
+        showToast('¡Gracias por tu opinión!', 'Se ha publicado correctamente', 'lucide:heart', 'text-orange-400');
+    });
+
+
+    // ===== INTERACTIVE STARS ON PRODUCTS (delegated) =====
+    document.addEventListener('click', function(e) {
+        var starDisplay = e.target.closest('.star-display');
+        if (!starDisplay) return;
+        var productName = starDisplay.dataset.product;
+        if (!productName) return;
+        var icons = starDisplay.querySelectorAll('.star-icon');
+        var clickedIndex = -1;
+        icons.forEach(function(icon, i) {
+            if (icon === e.target || icon.contains(e.target)) clickedIndex = i;
+        });
+        if (clickedIndex < 0) return;
+        var rating = clickedIndex + 1;
+        rateProduct(productName, rating);
+        showToast('Calificación guardada', productName + ': ' + rating + ' estrellas', 'lucide:star', 'text-orange-400');
+    });
+
+    document.addEventListener('mouseover', function(e) {
+        var starDisplay = e.target.closest('.star-display');
+        if (!starDisplay) return;
+        var icons = starDisplay.querySelectorAll('.star-icon');
+        var hoverIndex = -1;
+        icons.forEach(function(icon, i) {
+            if (icon === e.target || icon.contains(e.target)) hoverIndex = i;
+        });
+        if (hoverIndex < 0) return;
+        icons.forEach(function(icon, i) {
+            icon.classList.toggle('filled', i <= hoverIndex);
+            icon.classList.toggle('empty', i > hoverIndex);
+        });
+    });
+
+    document.addEventListener('mouseout', function(e) {
+        var starDisplay = e.target.closest('.star-display');
+        if (!starDisplay) return;
+        var productName = starDisplay.dataset.product;
+        if (!productName) return;
+        var rating = getProductRating(productName);
+        var icons = starDisplay.querySelectorAll('.star-icon');
+        icons.forEach(function(icon, i) {
+            icon.classList.toggle('filled', i < Math.round(rating.avg));
+            icon.classList.toggle('empty', i >= Math.round(rating.avg));
+        });
+    });
+
+
     // ===== TOAST =====
-    const toast = document.getElementById('toast');
-    let toastTimeout;
-    function showToast() {
+    var toast = document.getElementById('toast');
+    var toastTimeout;
+    function showToast(title, msg, icon, iconColor) {
         clearTimeout(toastTimeout);
+        document.getElementById('toastTitle').textContent = title;
+        document.getElementById('toastMsg').textContent = msg || '';
+        var iconEl = document.getElementById('toastIcon');
+        iconEl.setAttribute('data-icon', icon || 'lucide:check-circle');
+        iconEl.className = 'iconify flex-shrink-0 ' + (iconColor || 'text-orange-400');
         toast.classList.add('show');
         toastTimeout = setTimeout(hideToast, 3500);
     }
@@ -893,34 +1107,41 @@
 
 
     // ===== NAVBAR SCROLL =====
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
         if (window.scrollY > 100) {
             navbar.style.mixBlendMode = 'normal';
             navbar.style.background = 'rgba(250,250,249,0.85)';
             navbar.style.backdropFilter = 'blur(12px)';
             navbar.style.borderBottom = '1px solid rgba(231,229,228,0.5)';
-            navbar.querySelectorAll('a').forEach(a => a.style.color = '#292524');
-            navbar.querySelectorAll('#cartBtn .iconify, #menuToggle .iconify').forEach(i => i.style.color = '#1c1917');
+            navbar.querySelectorAll('a').forEach(function(a) { a.style.color = '#292524'; });
+            navbar.querySelectorAll('#cartBtn .iconify, #menuToggle .iconify').forEach(function(i) { i.style.color = '#1c1917'; });
         } else {
             navbar.style.mixBlendMode = 'difference';
             navbar.style.background = 'transparent';
             navbar.style.backdropFilter = 'none';
             navbar.style.borderBottom = 'none';
-            navbar.querySelectorAll('a').forEach(a => a.style.color = 'white');
-            navbar.querySelectorAll('#cartBtn .iconify, #menuToggle .iconify').forEach(i => i.style.color = 'white');
+            navbar.querySelectorAll('a').forEach(function(a) { a.style.color = 'white'; });
+            navbar.querySelectorAll('#cartBtn .iconify, #menuToggle .iconify').forEach(function(i) { i.style.color = 'white'; });
         }
     });
 
 
-    // ===== COLOR SWATCHES (delegated) =====
-    document.addEventListener('click', (e) => {
+    // ===== COLOR SWATCHES =====
+    document.addEventListener('click', function(e) {
         if (e.target.classList.contains('color-swatch')) {
-            const siblings = e.target.parentElement.querySelectorAll('span');
-            siblings.forEach(s => s.classList.remove('ring-2', 'ring-offset-2', 'ring-stone-400'));
+            var siblings = e.target.parentElement.querySelectorAll('span');
+            siblings.forEach(function(s) { s.classList.remove('ring-2', 'ring-offset-2', 'ring-stone-400'); });
             e.target.classList.add('ring-2', 'ring-offset-2', 'ring-stone-400');
         }
     });
+
+
+    // ===== SET ALL WHATSAPP LINKS =====
+    var waBase = 'https://wa.me/' + SITE_DATA.whatsapp;
+    document.getElementById('heroWhatsApp').href = waBase + '?text=' + encodeURIComponent('Hola, me interesa conocer más sobre sus productos de piel');
+    document.getElementById('ctaWhatsApp').href = waBase + '?text=' + encodeURIComponent('Hola, quiero hacer un pedido de artículos de piel');
+    document.getElementById('footerWhatsApp').href = waBase + '?text=' + encodeURIComponent('Hola, quiero información sobre sus productos');
     </script>
 </body>
 </html>
