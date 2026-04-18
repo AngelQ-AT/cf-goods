@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PELLÉ — Mochilas de Piel Artesanales</title>
+    <title>CUERO NOBLE — Mochilas y Carteras de Piel Artesanales</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -49,10 +49,6 @@
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-12px); }
-        }
-        @keyframes lineGrow {
-            from { width: 0; }
-            to { width: 100%; }
         }
 
         .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
@@ -136,6 +132,23 @@
             transform: translateY(0);
             opacity: 1;
         }
+
+        .cart-drawer {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cart-drawer.open {
+            transform: translateX(0);
+        }
+        .cart-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .cart-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="bg-stone-50 font-sans text-stone-800 antialiased overflow-x-hidden">
@@ -143,7 +156,7 @@
     <!-- ==================== NAVIGATION ==================== -->
     <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 mix-blend-difference transition-all duration-500">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="font-display font-600 text-white text-xl tracking-tight">PELLÉ</a>
+            <a href="#" class="font-display font-semibold text-white text-xl tracking-tight">CUERO NOBLE</a>
             <div class="hidden md:flex items-center gap-8">
                 <a href="#coleccion" class="nav-link relative text-white text-xs font-medium uppercase tracking-widest hover:opacity-70 transition-opacity duration-150">Colección</a>
                 <a href="#artesania" class="nav-link relative text-white text-xs font-medium uppercase tracking-widest hover:opacity-70 transition-opacity duration-150">Artesanía</a>
@@ -175,28 +188,60 @@
         <a href="#contacto" class="mobile-link text-white text-2xl font-display font-light tracking-tight">Contacto</a>
     </div>
 
+    <!-- Cart Overlay -->
+    <div id="cartOverlay" class="cart-overlay fixed inset-0 z-50 bg-stone-950/50 backdrop-blur-sm"></div>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-white shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between p-6 border-b border-stone-200">
+            <h3 class="font-display font-medium text-lg text-stone-900">Tu Carrito</h3>
+            <button id="cartClose" class="text-stone-500 hover:text-stone-900 transition-colors">
+                <span class="iconify" data-icon="lucide:x" data-width="22"></span>
+            </button>
+        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto p-6">
+            <div id="cartEmpty" class="flex flex-col items-center justify-center h-full text-center">
+                <span class="iconify text-stone-300 mb-4" data-icon="lucide:shopping-bag" data-width="48"></span>
+                <p class="text-stone-500 text-sm">Tu carrito está vacío</p>
+                <p class="text-stone-400 text-xs mt-1">Agrega productos para comenzar</p>
+            </div>
+            <div id="cartList" class="space-y-4 hidden"></div>
+        </div>
+        <div id="cartFooter" class="border-t border-stone-200 p-6 hidden">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-stone-600 text-sm">Total</span>
+                <span id="cartTotal" class="font-display font-semibold text-xl text-stone-900">$0</span>
+            </div>
+            <a id="whatsappOrder" href="#" target="_blank" class="btn-primary flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3.5 rounded-full text-sm font-medium hover:bg-green-700 transition-colors duration-150 w-full">
+                <span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span>
+                Pedir por WhatsApp
+            </a>
+            <p class="text-stone-400 text-xs text-center mt-3">Se abrirá WhatsApp con tu pedido listo para enviar</p>
+        </div>
+    </div>
+
     <!-- ==================== HERO ==================== -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0">
-            <img src="https://picsum.photos/seed/leather-hero-dark/1920/1080.jpg" alt="Mochila de piel" class="w-full h-full object-cover object-center">
+            <img src="https://picsum.photos/seed/leather-wallet-backpack-dark/1920/1080.jpg" alt="Mochila de piel artesanal" class="w-full h-full object-cover object-center">
             <div class="absolute inset-0 bg-stone-950/40"></div>
             <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(28,25,23,0.6), transparent 40%, transparent 60%, rgba(28,25,23,0.7));"></div>
         </div>
         <div class="relative z-10 text-center px-6 max-w-4xl">
-            <p class="animate-fade-up text-orange-300/90 text-xs font-medium uppercase tracking-[0.25em] mb-6">Artesanía en piel desde 2015</p>
+            <p class="animate-fade-up text-orange-300/90 text-xs font-medium uppercase tracking-[0.25em] mb-6">Artesanía en piel desde 2019</p>
             <h1 class="animate-fade-up delay-200 font-display font-light text-white text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[1.05]">
                 Elegancia que<br>se lleva a <em class="italic font-normal">cuestas</em>
             </h1>
             <p class="animate-fade-up delay-400 text-stone-300 text-lg md:text-xl font-light leading-relaxed mt-6 max-w-xl mx-auto">
-                Mochilas de piel hechas a mano, diseñadas para quienes valoran el detalle y la durabilidad.
+                Mochilas, carteras y accesorios de piel hechos a mano, diseñados para quienes valoran el detalle y la durabilidad.
             </p>
             <div class="animate-fade-up delay-600 flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
                 <a href="#coleccion" class="btn-primary bg-white text-stone-900 px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors duration-150 shadow-lg">
                     Ver Colección
                 </a>
-                <a href="#artesania" class="group text-white/80 px-8 py-3.5 rounded-full text-sm font-medium border border-white/20 hover:bg-white/10 transition-all duration-150 flex items-center gap-2">
-                    Nuestro Proceso
-                    <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="16"></span>
+                <a href="https://wa.me/5215512345678?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20sus%20productos%20de%20piel" target="_blank" class="group text-white/80 px-8 py-3.5 rounded-full text-sm font-medium border border-white/20 hover:bg-white/10 transition-all duration-150 flex items-center gap-2">
+                    <span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span>
+                    Escríbenos
                 </a>
             </div>
         </div>
@@ -210,25 +255,25 @@
     <!-- ==================== MARQUEE ==================== -->
     <div class="bg-stone-900 py-4 overflow-hidden marquee-track">
         <div class="flex animate-marquee whitespace-nowrap">
-            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Piel Italiana</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Piel de Primera</span>
             <span class="mx-4 text-orange-700">✦</span>
             <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Hecho a Mano</span>
             <span class="mx-4 text-orange-700">✦</span>
             <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Edición Limitada</span>
             <span class="mx-4 text-orange-700">✦</span>
-            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Garantía de 5 Años</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Diseño Mexicano</span>
             <span class="mx-4 text-orange-700">✦</span>
-            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Envío Gratuita</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Curtido Artesanal</span>
             <span class="mx-4 text-orange-700">✦</span>
-            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Piel Italiana</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Piel de Primera</span>
             <span class="mx-4 text-orange-700">✦</span>
             <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Hecho a Mano</span>
             <span class="mx-4 text-orange-700">✦</span>
             <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Edición Limitada</span>
             <span class="mx-4 text-orange-700">✦</span>
-            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Garantía de 5 Años</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Diseño Mexicano</span>
             <span class="mx-4 text-orange-700">✦</span>
-            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Envío Gratuito</span>
+            <span class="mx-8 text-stone-500 text-xs uppercase tracking-[0.2em] font-medium">Curtido Artesanal</span>
             <span class="mx-4 text-orange-700">✦</span>
         </div>
     </div>
@@ -248,10 +293,10 @@
                 <!-- Product 1 -->
                 <div class="reveal product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
                     <div class="relative overflow-hidden aspect-[4/5]">
-                        <img src="https://picsum.photos/seed/leather-bag-1/600/750.jpg" alt="Mochila Vénecia" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                        <img src="https://picsum.photos/seed/leather-backpack-brown/600/750.jpg" alt="Mochila León" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
                         <div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">
-                            <button onclick="addToCart('Vénecia', 289)" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
-                                Añadir al Carrito
+                            <button onclick="addToCart('Mochila León', 6500, 'leather-backpack-brown')" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
+                                Agregar al Carrito
                             </button>
                         </div>
                         <span class="absolute top-4 left-4 bg-orange-700 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">Nuevo</span>
@@ -265,10 +310,10 @@
                             <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
                             <span class="text-stone-400 text-xs ml-1">(48)</span>
                         </div>
-                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Vénecia</h3>
-                        <p class="text-stone-500 text-sm mt-1">Piel de ternera curtida al vegetal</p>
+                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila León</h3>
+                        <p class="text-stone-500 text-sm mt-1">Piel de res curtida al vegetal</p>
                         <div class="flex items-center justify-between mt-4">
-                            <span class="text-stone-900 font-semibold text-lg">€289</span>
+                            <span class="text-stone-900 font-semibold text-lg">$6,500</span>
                             <div class="flex gap-2">
                                 <span class="w-4 h-4 rounded-full bg-amber-900 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
                                 <span class="w-4 h-4 rounded-full bg-stone-800 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
@@ -281,10 +326,10 @@
                 <!-- Product 2 -->
                 <div class="reveal delay-100 product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
                     <div class="relative overflow-hidden aspect-[4/5]">
-                        <img src="https://picsum.photos/seed/leather-bag-2/600/750.jpg" alt="Mochila Florencia" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                        <img src="https://picsum.photos/seed/leather-wallet-womens/600/750.jpg" alt="Cartera Guadalajara" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
                         <div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">
-                            <button onclick="addToCart('Florencia', 345)" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
-                                Añadir al Carrito
+                            <button onclick="addToCart('Cartera Guadalajara', 2800, 'leather-wallet-womens')" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
+                                Agregar al Carrito
                             </button>
                         </div>
                     </div>
@@ -297,10 +342,10 @@
                             <span class="iconify text-stone-300" data-icon="lucide:star" data-width="12"></span>
                             <span class="text-stone-400 text-xs ml-1">(32)</span>
                         </div>
-                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Florencia</h3>
+                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Cartera Guadalajara</h3>
                         <p class="text-stone-500 text-sm mt-1">Piel de cabra con acabado satinado</p>
                         <div class="flex items-center justify-between mt-4">
-                            <span class="text-stone-900 font-semibold text-lg">€345</span>
+                            <span class="text-stone-900 font-semibold text-lg">$2,800</span>
                             <div class="flex gap-2">
                                 <span class="w-4 h-4 rounded-full bg-amber-800 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
                                 <span class="w-4 h-4 rounded-full bg-stone-600 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
@@ -312,10 +357,10 @@
                 <!-- Product 3 -->
                 <div class="reveal delay-200 product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
                     <div class="relative overflow-hidden aspect-[4/5]">
-                        <img src="https://picsum.photos/seed/leather-bag-3/600/750.jpg" alt="Mochila Milán" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                        <img src="https://picsum.photos/seed/leather-bag-premium-dark/600/750.jpg" alt="Mochila Monterrey" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
                         <div class="product-overlay absolute inset-0 bg-stone-950/20 opacity-0 transition-opacity duration-500 flex items-end p-6">
-                            <button onclick="addToCart('Milán', 419)" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
-                                Añadir al Carrito
+                            <button onclick="addToCart('Mochila Monterrey', 9500, 'leather-bag-premium-dark')" class="product-tag transform translate-y-4 opacity-0 transition-all duration-500 delay-100 bg-white text-stone-900 px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-100 w-full text-center">
+                                Agregar al Carrito
                             </button>
                         </div>
                         <span class="absolute top-4 left-4 bg-stone-900 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">Premium</span>
@@ -329,10 +374,10 @@
                             <span class="iconify text-orange-500" data-icon="lucide:star" data-width="12"></span>
                             <span class="text-stone-400 text-xs ml-1">(67)</span>
                         </div>
-                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Milán</h3>
+                        <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Monterrey</h3>
                         <p class="text-stone-500 text-sm mt-1">Piel de búfalo con herrajes de latón</p>
                         <div class="flex items-center justify-between mt-4">
-                            <span class="text-stone-900 font-semibold text-lg">€419</span>
+                            <span class="text-stone-900 font-semibold text-lg">$9,500</span>
                             <div class="flex gap-2">
                                 <span class="w-4 h-4 rounded-full bg-amber-950 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
                                 <span class="w-4 h-4 rounded-full bg-stone-900 border-2 border-stone-200 cursor-pointer hover:scale-125 transition-transform"></span>
@@ -358,9 +403,9 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                 <div class="reveal-left">
                     <div class="relative">
-                        <img src="https://picsum.photos/seed/leather-craft-1/700/900.jpg" alt="Artesano trabajando piel" class="w-full rounded-2xl object-cover aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/leather-crafting-hand-tools/700/900.jpg" alt="Artesano trabajando piel" class="w-full rounded-2xl object-cover aspect-[3/4]">
                         <div class="absolute -bottom-6 -right-6 bg-stone-900 text-white p-6 rounded-2xl shadow-2xl max-w-[200px] animate-float">
-                            <p class="font-display font-light text-3xl tracking-tight">9+</p>
+                            <p class="font-display font-light text-3xl tracking-tight">5+</p>
                             <p class="text-stone-400 text-xs uppercase tracking-wider mt-1">Años de oficio</p>
                         </div>
                     </div>
@@ -369,7 +414,7 @@
                     <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-4">Nuestro Proceso</p>
                     <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900 leading-tight">La artesanía detrás de cada puntada</h2>
                     <p class="text-stone-500 text-lg font-light leading-relaxed mt-6">
-                        Cada mochila PELLÉ recorre un camino de más de 40 horas de trabajo manual. Desde la selección de la piel en curtidurías italianas hasta el último remate, cada paso es guiado por maestros artesanos con décadas de experiencia.
+                        Cada pieza Cuero Noble recorre un camino de más de 40 horas de trabajo manual. Desde la selección de la piel en curtidurías locales hasta el último remate, cada paso es guiado por maestros artesanos con décadas de experiencia.
                     </p>
                     <div class="mt-10 space-y-6">
                         <div class="flex gap-4">
@@ -378,7 +423,7 @@
                             </div>
                             <div>
                                 <h4 class="font-display font-medium text-stone-900">Selección de Piel</h4>
-                                <p class="text-stone-500 text-sm leading-relaxed mt-1">Elegimos solo los mejores cueros de curtidurías de Toscana, con espesor y textura perfectas.</p>
+                                <p class="text-stone-500 text-sm leading-relaxed mt-1">Elegimos solo los mejores cueros de curtidurías mexicanas, con espesor y textura perfectas.</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
@@ -407,13 +452,13 @@
 
     <!-- ==================== FULL WIDTH IMAGE BANNER ==================== -->
     <section class="relative h-[60vh] md:h-[70vh] overflow-hidden">
-        <img src="https://picsum.photos/seed/leather-texture-wide/1920/800.jpg" alt="Textura de piel" class="w-full h-full object-cover">
+        <img src="https://picsum.photos/seed/leather-texture-closeup-grain/1920/800.jpg" alt="Textura de piel" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-stone-950/50"></div>
         <div class="absolute inset-0 flex items-center justify-center text-center px-6">
             <div class="reveal-scale">
                 <p class="text-orange-300/80 text-xs font-medium uppercase tracking-[0.25em] mb-4">Filosofía</p>
                 <h2 class="font-display font-light text-white text-3xl md:text-5xl lg:text-6xl tracking-tighter leading-tight max-w-3xl">
-                    No fabricamos mochilas.<br>Creamos <em class="italic">compañeros</em> de viaje.
+                    No fabricamos accesorios.<br>Creamos <em class="italic">compañeros</em> de viaje.
                 </h2>
             </div>
         </div>
@@ -428,11 +473,11 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <a href="#" class="reveal group relative overflow-hidden rounded-2xl aspect-[3/4] block">
-                    <img src="https://picsum.photos/seed/leather-cat-urban/600/800.jpg" alt="Mochilas Urbanas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <img src="https://picsum.photos/seed/leather-mochilas-urban-style/600/800.jpg" alt="Mochilas Urbanas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
                     <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8">
                         <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">12 Productos</p>
-                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">Urbanas</h3>
+                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">Mochilas</h3>
                         <div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300">
                             <span class="text-sm font-medium">Descubrir</span>
                             <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span>
@@ -440,11 +485,11 @@
                     </div>
                 </a>
                 <a href="#" class="reveal delay-100 group relative overflow-hidden rounded-2xl aspect-[3/4] block">
-                    <img src="https://picsum.photos/seed/leather-cat-travel/600/800.jpg" alt="Mochilas de Viaje" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <img src="https://picsum.photos/seed/leather-carteras-bolsos-collection/600/800.jpg" alt="Carteras y Bolsos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
                     <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8">
-                        <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">8 Productos</p>
-                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">De Viaje</h3>
+                        <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">15 Productos</p>
+                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">Carteras y Bolsos</h3>
                         <div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300">
                             <span class="text-sm font-medium">Descubrir</span>
                             <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span>
@@ -452,11 +497,11 @@
                     </div>
                 </a>
                 <a href="#" class="reveal delay-200 group relative overflow-hidden rounded-2xl aspect-[3/4] block">
-                    <img src="https://picsum.photos/seed/leather-cat-executive/600/800.jpg" alt="Mochilas Ejecutivas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                    <img src="https://picsum.photos/seed/leather-accessories-belts-keyholders/600/800.jpg" alt="Accesorios de Piel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
                     <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8">
-                        <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">6 Productos</p>
-                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">Ejecutivas</h3>
+                        <p class="text-orange-300 text-xs font-medium uppercase tracking-wider mb-2">20 Productos</p>
+                        <h3 class="font-display font-medium text-white text-2xl tracking-tight">Accesorios</h3>
                         <div class="flex items-center gap-2 mt-3 text-white/70 group-hover:text-orange-300 transition-colors duration-300">
                             <span class="text-sm font-medium">Descubrir</span>
                             <span class="iconify group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right" data-width="14"></span>
@@ -470,34 +515,27 @@
     <!-- ==================== FEATURES ==================== -->
     <section class="py-24 md:py-32 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="reveal text-center p-6">
                     <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
-                        <span class="iconify text-stone-700" data-icon="lucide:shield-check" data-width="24"></span>
+                        <span class="iconify text-stone-700" data-icon="lucide:hand-metal" data-width="24"></span>
                     </div>
-                    <h4 class="font-display font-medium text-stone-900 mb-2">Garantía 5 Años</h4>
-                    <p class="text-stone-500 text-sm leading-relaxed">Respaldamos cada pieza con una garantía que demuestra nuestra confianza en la calidad.</p>
+                    <h4 class="font-display font-medium text-stone-900 mb-2">100% Hecho a Mano</h4>
+                    <p class="text-stone-500 text-sm leading-relaxed">Cada pieza es elaborada artesanalmente, lo que hace que cada artículo sea verdaderamente único.</p>
                 </div>
                 <div class="reveal delay-100 text-center p-6">
                     <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
-                        <span class="iconify text-stone-700" data-icon="lucide:truck" data-width="24"></span>
+                        <span class="iconify text-stone-700" data-icon="lucide:palette" data-width="24"></span>
                     </div>
-                    <h4 class="font-display font-medium text-stone-900 mb-2">Envío Gratuito</h4>
-                    <p class="text-stone-500 text-sm leading-relaxed">Envío gratis a toda Europa. Empaque premium con protección especial para tu pieza.</p>
+                    <h4 class="font-display font-medium text-stone-900 mb-2">Piel Curtida al Vegetal</h4>
+                    <p class="text-stone-500 text-sm leading-relaxed">Utilizamos un proceso de curtido natural sin cromo, respetuoso con el medio ambiente.</p>
                 </div>
                 <div class="reveal delay-200 text-center p-6">
                     <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
-                        <span class="iconify text-stone-700" data-icon="lucide:undo-2" data-width="24"></span>
+                        <span class="iconify text-stone-700" data-icon="lucide:message-circle" data-width="24"></span>
                     </div>
-                    <h4 class="font-display font-medium text-stone-900 mb-2">Devolución 30 Días</h4>
-                    <p class="text-stone-500 text-sm leading-relaxed">Si no es lo que esperabas, devuélvela sin preguntas. Queremos tu total satisfacción.</p>
-                </div>
-                <div class="reveal delay-300 text-center p-6">
-                    <div class="w-14 h-14 rounded-2xl bg-stone-50 border border-stone-200/60 flex items-center justify-center mx-auto mb-5">
-                        <span class="iconify text-stone-700" data-icon="lucide:leaf" data-width="24"></span>
-                    </div>
-                    <h4 class="font-display font-medium text-stone-900 mb-2">Piel Sostenible</h4>
-                    <p class="text-stone-500 text-sm leading-relaxed">Curtido vegetal sin cromo. Respetamos el medio ambiente en cada etapa del proceso.</p>
+                    <h4 class="font-display font-medium text-stone-900 mb-2">Atención Personalizada</h4>
+                    <p class="text-stone-500 text-sm leading-relaxed">Resolvemos tus dudas y te asesoramos directamente por WhatsApp para que elijas la pieza ideal.</p>
                 </div>
             </div>
         </div>
@@ -517,18 +555,18 @@
                 <div class="reveal product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
                     <div class="flex flex-col sm:flex-row">
                         <div class="relative overflow-hidden sm:w-1/2 aspect-square sm:aspect-auto">
-                            <img src="https://picsum.photos/seed/leather-bag-4/500/500.jpg" alt="Mochila Nápoles" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                            <img src="https://picsum.photos/seed/leather-shoulder-bag-tan/500/500.jpg" alt="Bolso Cruzado Puebla" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
                             <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full">-20%</span>
                         </div>
                         <div class="p-6 sm:w-1/2 flex flex-col justify-center">
-                            <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Nápoles</h3>
-                            <p class="text-stone-500 text-sm mt-1 leading-relaxed">Piel de cordero suave, perfecta para el día a día con compartimento acolchado para portátil 15".</p>
+                            <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Bolso Cruzado Puebla</h3>
+                            <p class="text-stone-500 text-sm mt-1 leading-relaxed">Piel suave con acabado antiderrapante. Ideal para uso diario con compartimento interior.</p>
                             <div class="flex items-center gap-3 mt-4">
-                                <span class="text-stone-400 line-through text-sm">€259</span>
-                                <span class="text-orange-700 font-semibold text-lg">€207</span>
+                                <span class="text-stone-400 line-through text-sm">$3,500</span>
+                                <span class="text-orange-700 font-semibold text-lg">$2,800</span>
                             </div>
-                            <button onclick="addToCart('Nápoles', 207)" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">
-                                Añadir al Carrito
+                            <button onclick="addToCart('Bolso Cruzado Puebla', 2800, 'leather-shoulder-bag-tan')" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">
+                                Agregar al Carrito
                             </button>
                         </div>
                     </div>
@@ -537,16 +575,16 @@
                 <div class="reveal delay-100 product-card group bg-white rounded-2xl overflow-hidden border border-stone-200/60 hover:shadow-lg hover:border-stone-300 transition-all duration-500">
                     <div class="flex flex-col sm:flex-row">
                         <div class="relative overflow-hidden sm:w-1/2 aspect-square sm:aspect-auto">
-                            <img src="https://picsum.photos/seed/leather-bag-5/500/500.jpg" alt="Mochila Verona" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
+                            <img src="https://picsum.photos/seed/leather-briefcase-portfolio/500/500.jpg" alt="Portafolio Querétaro" class="product-img w-full h-full object-cover transition-transform duration-700 ease-out">
                         </div>
                         <div class="p-6 sm:w-1/2 flex flex-col justify-center">
-                            <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Mochila Verona</h3>
-                            <p class="text-stone-500 text-sm mt-1 leading-relaxed">Diseño convertible: mochila y bolso de mano. Piel grain full con cierre magnético oculto.</p>
+                            <h3 class="font-display font-medium text-lg tracking-tight text-stone-900">Portafolio Querétaro</h3>
+                            <p class="text-stone-500 text-sm mt-1 leading-relaxed">Diseño elegante para reuniones. Piel grain full con cierre magnético y asa reforzada.</p>
                             <div class="flex items-center gap-3 mt-4">
-                                <span class="text-stone-900 font-semibold text-lg">€375</span>
+                                <span class="text-stone-900 font-semibold text-lg">$8,500</span>
                             </div>
-                            <button onclick="addToCart('Verona', 375)" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">
-                                Añadir al Carrito
+                            <button onclick="addToCart('Portafolio Querétaro', 8500, 'leather-briefcase-portfolio')" class="btn-primary mt-5 bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 w-full sm:w-auto text-center">
+                                Agregar al Carrito
                             </button>
                         </div>
                     </div>
@@ -571,12 +609,12 @@
                         <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
                         <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
                     </div>
-                    <p class="text-stone-300 text-base leading-relaxed font-light">"La calidad es impresionante. Llevo mi mochila Vénecia todos los días desde hace dos años y parece recién comprada. La piel se ha embellecido con el uso."</p>
+                    <p class="text-stone-300 text-base leading-relaxed font-light">"La calidad es impresionante. Llevo mi mochila León todos los días desde hace dos años y parece recién comprada. La piel se ha embellecido con el uso."</p>
                     <div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">
                         <div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">MC</div>
                         <div>
                             <p class="text-white text-sm font-medium">María Castellanos</p>
-                            <p class="text-stone-500 text-xs">Directora Creativa, Madrid</p>
+                            <p class="text-stone-500 text-xs">Diseñadora, CDMX</p>
                         </div>
                     </div>
                 </div>
@@ -588,12 +626,12 @@
                         <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
                         <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
                     </div>
-                    <p class="text-stone-300 text-base leading-relaxed font-light">"Regalé la mochila Milán a mi pareja y fue un éxito total. El empaque, la presentación, todo transmite lujo sin ser ostentoso. Repetiré seguro."</p>
+                    <p class="text-stone-300 text-base leading-relaxed font-light">"Regalé la mochila Monterrey a mi pareja y fue un éxito total. El empaque, la presentación, todo transmite lujo sin ser ostentoso. Muy buena atención por WhatsApp."</p>
                     <div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">
                         <div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">AL</div>
                         <div>
                             <p class="text-white text-sm font-medium">Andrés López</p>
-                            <p class="text-stone-500 text-xs">Arquitecto, Barcelona</p>
+                            <p class="text-stone-500 text-xs">Arquitecto, Guadalajara</p>
                         </div>
                     </div>
                 </div>
@@ -605,12 +643,12 @@
                         <span class="iconify text-orange-500" data-icon="lucide:star" data-width="14"></span>
                         <span class="iconify text-stone-600" data-icon="lucide:star" data-width="14"></span>
                     </div>
-                    <p class="text-stone-300 text-base leading-relaxed font-light">"Viajé por toda Sudamérica con mi Florencia y soportó todo: lluvia, sol, viajes en bus. Se ha puesto más bonita si cabe. Productos para toda la vida."</p>
+                    <p class="text-stone-300 text-base leading-relaxed font-light">"Viajé por todo el sur de México con mi Bolso Cruzado y soportó todo: lluvia, sol, caminos empinados. Se ha puesto más bonito con el tiempo."</p>
                     <div class="flex items-center gap-3 mt-6 pt-6 border-t border-stone-700/50">
                         <div class="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center text-white text-sm font-medium">LR</div>
                         <div>
                             <p class="text-white text-sm font-medium">Laura Ruiz</p>
-                            <p class="text-stone-500 text-xs">Fotógrafa, Valencia</p>
+                            <p class="text-stone-500 text-xs">Fotógrafa, Oaxaca</p>
                         </div>
                     </div>
                 </div>
@@ -622,17 +660,25 @@
     <section id="contacto" class="py-24 md:py-32 px-6">
         <div class="max-w-3xl mx-auto text-center">
             <div class="reveal">
-                <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-4">Newsletter</p>
-                <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900">Sé el primero en conocer</h2>
-                <p class="text-stone-500 text-lg font-light leading-relaxed mt-4">Acceso anticipado a nuevas colecciones, descuentos exclusivos y contenido sobre el mundo de la piel artesanal.</p>
+                <p class="text-orange-700 text-xs font-medium uppercase tracking-[0.2em] mb-4">Contáctanos</p>
+                <h2 class="font-display font-medium text-3xl md:text-4xl tracking-tight text-stone-900">¿Lista para hacer tu pedido?</h2>
+                <p class="text-stone-500 text-lg font-light leading-relaxed mt-4">Agrega los productos que te gusten al carrito y envíanos tu pedido por WhatsApp. También puedes escribirnos directamente si tienes dudas.</p>
             </div>
-            <form id="newsletterForm" class="reveal delay-200 mt-10 flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-                <input type="email" id="emailInput" placeholder="Tu correo electrónico" required class="flex-1 px-5 py-3.5 rounded-full border border-stone-200 bg-white text-stone-800 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-700/20 focus:border-orange-700 transition-all duration-200">
-                <button type="submit" class="btn-primary bg-stone-900 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-800 transition-colors duration-150 whitespace-nowrap">
-                    Suscribirme
-                </button>
-            </form>
-            <p class="reveal delay-300 text-stone-400 text-xs mt-4">Sin spam. Cancela cuando quieras. Respetamos tu privacidad.</p>
+            <div class="reveal delay-200 mt-10 flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                <a href="https://wa.me/5215512345678?text=Hola,%20quiero%20hacer%20un%20pedido%20de%20artículos%20de%20piel" target="_blank" class="btn-primary flex items-center justify-center gap-2 bg-green-600 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-green-700 transition-colors duration-150 whitespace-nowrap shadow-lg">
+                    <span class="iconify" data-icon="mdi:whatsapp" data-width="18"></span>
+                    Pedir por WhatsApp
+                </a>
+                <a href="tel:+5215512345678" class="flex items-center justify-center gap-2 border border-stone-200 text-stone-700 px-8 py-3.5 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors duration-150 whitespace-nowrap">
+                    <span class="iconify" data-icon="lucide:phone" data-width="16"></span>
+                    Llamar
+                </a>
+            </div>
+            <div class="reveal delay-300 mt-8 p-6 bg-white rounded-2xl border border-stone-200/60 max-w-md mx-auto">
+                <p class="text-stone-600 text-sm font-medium mb-1">Número de WhatsApp</p>
+                <p class="text-stone-900 font-display font-medium text-lg">+52 55 1234 5678</p>
+                <p class="text-stone-400 text-xs mt-2">Lunes a sábado · 9:00 — 19:00 hrs</p>
+            </div>
         </div>
     </section>
 
@@ -641,8 +687,8 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
                 <div class="md:col-span-1">
-                    <a href="#" class="font-display font-semibold text-white text-xl tracking-tight">PELLÉ</a>
-                    <p class="text-stone-500 text-sm leading-relaxed mt-4">Mochilas de piel artesanales hechas en Europa. Diseño atemporal, calidad sin compromiso.</p>
+                    <a href="#" class="font-display font-semibold text-white text-xl tracking-tight">CUERO NOBLE</a>
+                    <p class="text-stone-500 text-sm leading-relaxed mt-4">Mochilas, carteras y accesorios de piel artesanales hechos en México. Diseño atemporal, calidad sin compromiso.</p>
                     <div class="flex gap-4 mt-6">
                         <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
                             <span class="iconify" data-icon="lucide:instagram" data-width="18"></span>
@@ -651,21 +697,18 @@
                             <span class="iconify" data-icon="lucide:facebook" data-width="18"></span>
                         </a>
                         <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
-                            <span class="iconify" data-icon="lucide:twitter" data-width="18"></span>
-                        </a>
-                        <a href="#" class="text-stone-500 hover:text-orange-400 transition-colors duration-300">
-                            <span class="iconify" data-icon="lucide:linkedin" data-width="18"></span>
+                            <span class="iconify" data-icon="mdi:tiktok" data-width="18"></span>
                         </a>
                     </div>
                 </div>
                 <div>
                     <h5 class="text-white text-xs font-medium uppercase tracking-wider mb-4">Tienda</h5>
                     <ul class="space-y-3">
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Mochilas Urbanas</a></li>
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Mochilas de Viaje</a></li>
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Mochilas Ejecutivas</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Mochilas</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Carteras</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Bolsos</a></li>
+                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Portafolios</a></li>
                         <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Accesorios</a></li>
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Edición Limitada</a></li>
                     </ul>
                 </div>
                 <div>
@@ -679,42 +722,42 @@
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-white text-xs font-medium uppercase tracking-wider mb-4">Atención al Cliente</h5>
+                    <h5 class="text-white text-xs font-medium uppercase tracking-wider mb-4">Contacto</h5>
                     <ul class="space-y-3">
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Envíos y Devoluciones</a></li>
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Política de Privacidad</a></li>
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Términos y Condiciones</a></li>
-                        <li><a href="#" class="line-accent text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300 relative">Contacto</a></li>
+                        <li class="flex items-center gap-3">
+                            <span class="iconify text-green-500" data-icon="mdi:whatsapp" data-width="16"></span>
+                            <a href="https://wa.me/5215512345678" target="_blank" class="text-stone-500 text-sm hover:text-orange-300 transition-colors duration-300">+52 55 1234 5678</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="iconify text-stone-500" data-icon="lucide:mail" data-width="14"></span>
+                            <span class="text-stone-500 text-sm">hola@cueronoble.mx</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="iconify text-stone-500" data-icon="lucide:map-pin" data-width="14"></span>
+                            <span class="text-stone-500 text-sm">Ciudad de México, México</span>
+                        </li>
                     </ul>
-                    <div class="mt-6 flex items-center gap-3">
-                        <span class="iconify text-stone-500" data-icon="lucide:mail" data-width="14"></span>
-                        <span class="text-stone-500 text-sm">hola@pelle.es</span>
-                    </div>
-                    <div class="mt-2 flex items-center gap-3">
-                        <span class="iconify text-stone-500" data-icon="lucide:phone" data-width="14"></span>
-                        <span class="text-stone-500 text-sm">+34 912 345 678</span>
+                    <div class="mt-6 p-3 bg-stone-800/50 rounded-xl border border-stone-700/50">
+                        <p class="text-stone-400 text-xs">Lun — Sáb</p>
+                        <p class="text-white text-sm font-medium">9:00 — 19:00 hrs</p>
                     </div>
                 </div>
             </div>
             <div class="border-t border-stone-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-stone-600 text-xs">© 2025 PELLÉ. Todos los derechos reservados.</p>
+                <p class="text-stone-600 text-xs">© 2025 Cuero Noble. Todos los derechos reservados.</p>
                 <div class="flex items-center gap-4">
-                    <div class="flex items-center gap-1 text-stone-600">
-                        <span class="iconify" data-icon="lucide:credit-card" data-width="16"></span>
-                        <span class="iconify" data-icon="lucide:lock" data-width="14"></span>
-                    </div>
-                    <span class="text-stone-600 text-xs">Pagos seguros con SSL</span>
+                    <span class="text-stone-600 text-xs">Pagos contra entrega y transferencia</span>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- ==================== TOAST NOTIFICATION ==================== -->
-    <div id="toast" class="toast fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
+    <div id="toast" class="toast fixed bottom-6 right-6 z-[60] bg-stone-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
         <span class="iconify text-orange-400 flex-shrink-0" data-icon="lucide:check-circle" data-width="20"></span>
         <div>
-            <p id="toastTitle" class="text-sm font-medium">Añadido al carrito</p>
-            <p id="toastMsg" class="text-stone-400 text-xs mt-0.5">Mochila Vénecia — €289</p>
+            <p id="toastTitle" class="text-sm font-medium">Agregado al carrito</p>
+            <p id="toastMsg" class="text-stone-400 text-xs mt-0.5">Mochila León — $6,500</p>
         </div>
         <button onclick="hideToast()" class="text-stone-500 hover:text-white transition-colors ml-2 flex-shrink-0">
             <span class="iconify" data-icon="lucide:x" data-width="16"></span>
@@ -723,6 +766,10 @@
 
     <!-- ==================== SCRIPTS ==================== -->
     <script>
+        // ===== CART STATE =====
+        let cart = [];
+        const WHATSAPP_NUMBER = '5215512345678';
+
         // ===== SCROLL REVEAL =====
         const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
         const revealObserver = new IntersectionObserver((entries) => {
@@ -755,24 +802,124 @@
         menuClose.addEventListener('click', closeMenu);
         mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-        // ===== CART =====
-        let cartItems = 0;
-        const cartCount = document.getElementById('cartCount');
+        // ===== CART DRAWER =====
+        const cartBtn = document.getElementById('cartBtn');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartClose = document.getElementById('cartClose');
+        const cartCountEl = document.getElementById('cartCount');
+        const cartEmpty = document.getElementById('cartEmpty');
+        const cartList = document.getElementById('cartList');
+        const cartFooter = document.getElementById('cartFooter');
+        const cartTotalEl = document.getElementById('cartTotal');
+        const whatsappOrderBtn = document.getElementById('whatsappOrder');
 
-        function addToCart(name, price) {
-            cartItems++;
-            cartCount.textContent = cartItems;
-            cartCount.classList.remove('hidden');
+        function openCart() {
+            cartDrawer.classList.add('open');
+            cartOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            cartDrawer.classList.remove('open');
+            cartOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        cartBtn.addEventListener('click', openCart);
+        cartClose.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // ===== ADD TO CART =====
+        function addToCart(name, price, imgSeed) {
+            const existingIndex = cart.findIndex(item => item.name === name);
+            if (existingIndex >= 0) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push({ name, price, imgSeed, qty: 1 });
+            }
+            updateCartUI();
 
             // Animate cart icon
-            const cartBtn = document.getElementById('cartBtn');
-            cartBtn.classList.add('scale-125');
-            setTimeout(() => cartBtn.classList.remove('scale-125'), 200);
+            cartBtn.style.transform = 'scale(1.3)';
+            setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
 
             // Show toast
-            document.getElementById('toastTitle').textContent = 'Añadido al carrito';
-            document.getElementById('toastMsg').textContent = `Mochila ${name} — €${price}`;
+            document.getElementById('toastTitle').textContent = 'Agregado al carrito';
+            document.getElementById('toastMsg').textContent = `${name} — $${price.toLocaleString('es-MX')}`;
             showToast();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            // Update count badge
+            if (totalItems > 0) {
+                cartCountEl.textContent = totalItems;
+                cartCountEl.classList.remove('hidden');
+            } else {
+                cartCountEl.classList.add('hidden');
+            }
+
+            // Update drawer content
+            if (cart.length === 0) {
+                cartEmpty.classList.remove('hidden');
+                cartList.classList.add('hidden');
+                cartFooter.classList.add('hidden');
+            } else {
+                cartEmpty.classList.add('hidden');
+                cartList.classList.remove('hidden');
+                cartFooter.classList.remove('hidden');
+
+                cartList.innerHTML = cart.map((item, i) => `
+                    <div class="flex gap-4 p-3 bg-stone-50 rounded-xl">
+                        <img src="https://picsum.photos/seed/${item.imgSeed}/120/120.jpg" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-display font-medium text-sm text-stone-900 truncate">${item.name}</h4>
+                            <p class="text-orange-700 text-sm font-semibold mt-0.5">$${item.price.toLocaleString('es-MX')}</p>
+                            <div class="flex items-center justify-between mt-2">
+                                <div class="flex items-center gap-2 bg-white border border-stone-200 rounded-full">
+                                    <button onclick="changeQty(${i}, -1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100">
+                                        <span class="iconify" data-icon="lucide:minus" data-width="12"></span>
+                                    </button>
+                                    <span class="text-sm font-medium text-stone-900 w-4 text-center">${item.qty}</span>
+                                    <button onclick="changeQty(${i}, 1)" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-stone-900 transition-colors rounded-full hover:bg-stone-100">
+                                        <span class="iconify" data-icon="lucide:plus" data-width="12"></span>
+                                    </button>
+                                </div>
+                                <button onclick="removeFromCart(${i})" class="text-stone-400 hover:text-red-500 transition-colors">
+                                    <span class="iconify" data-icon="lucide:trash-2" data-width="14"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                cartTotalEl.textContent = `$${totalPrice.toLocaleString('es-MX')}`;
+
+                // Build WhatsApp message
+                let message = '¡Hola! Me gustaría hacer el siguiente pedido:\n\n';
+                cart.forEach(item => {
+                    message += `• ${item.name} x${item.qty} — $${(item.price * item.qty).toLocaleString('es-MX')}\n`;
+                });
+                message += `\nTotal: $${totalPrice.toLocaleString('es-MX')}`;
+                message += '\n\n¿Podrían confirmarme disponibilidad y detalles de envío?';
+                whatsappOrderBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            }
         }
 
         // ===== TOAST =====
@@ -789,23 +936,7 @@
             toast.classList.remove('show');
         }
 
-        // ===== NEWSLETTER =====
-        const newsletterForm = document.getElementById('newsletterForm');
-        const emailInput = document.getElementById('emailInput');
-
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = emailInput.value;
-            if (email) {
-                document.getElementById('toastTitle').textContent = '¡Suscrito!';
-                document.getElementById('toastMsg').textContent = `${email} se ha registrado correctamente.`;
-                showToast();
-                emailInput.value = '';
-            }
-        });
-
         // ===== NAVBAR SCROLL EFFECT =====
-        let lastScroll = 0;
         const navbar = document.getElementById('navbar');
 
         window.addEventListener('scroll', () => {
@@ -819,11 +950,9 @@
                     link.style.color = '#292524';
                 });
                 navbar.querySelector('.font-display').style.color = '#1c1917';
-                navbar.querySelectorAll('.iconify').forEach(icon => {
+                navbar.querySelectorAll('#cartBtn .iconify, #menuToggle .iconify').forEach(icon => {
                     icon.style.color = '#1c1917';
                 });
-                // Fix cart count
-                if (cartCount) cartCount.style.position = 'absolute';
             } else {
                 navbar.style.mixBlendMode = 'difference';
                 navbar.style.background = 'transparent';
@@ -833,15 +962,14 @@
                     link.style.color = 'white';
                 });
                 navbar.querySelector('.font-display').style.color = 'white';
-                navbar.querySelectorAll('.iconify').forEach(icon => {
+                navbar.querySelectorAll('#cartBtn .iconify, #menuToggle .iconify').forEach(icon => {
                     icon.style.color = 'white';
                 });
             }
-            lastScroll = currentScroll;
         });
 
         // ===== COLOR SWATCHES =====
-        document.querySelectorAll('.product-card .rounded-full[class*="bg-amber"], .product-card .rounded-full[class*="bg-stone-8"], .product-card .rounded-full[class*="bg-orange-8"], .product-card .rounded-full[class*="bg-red-9"]').forEach(swatch => {
+        document.querySelectorAll('.product-card [class*="rounded-full"][class*="bg-amber-9], .product-card [class*="rounded-full"][class*="bg-stone-8"], .product-card [class*="rounded-full"][class*="bg-orange-8"], .product-card [class*="rounded-full"][class*="bg-red-9"]').forEach(swatch => {
             swatch.addEventListener('click', function() {
                 const siblings = this.parentElement.querySelectorAll('span');
                 siblings.forEach(s => s.classList.remove('ring-2', 'ring-offset-2', 'ring-stone-400'));
